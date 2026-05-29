@@ -727,6 +727,11 @@ utils.optimizers.adopt.adopt(
     fused=None,
     grad_scale=None,
     found_inf=None,
+```
+
+Continuation:
+
+```python
     has_complex=False,
     *,
     beta1,
@@ -1787,6 +1792,11 @@ core.trainers.grpo.trainer.AxolotlGRPOSequenceParallelTrainer(
     optimizers=(None, None),
     peft_config=None,
     optimizer_cls_and_kwargs=None,
+```
+
+Continuation:
+
+```python
 )
 ```
 
@@ -2713,6 +2723,11 @@ prompt_strategies.chat_template.ChatTemplatePrompter(
     field_system='system',
     field_tools='tools',
     field_thinking='reasoning_content',
+```
+
+Continuation:
+
+```python
     roles=None,
     template_thinking_key='reasoning_content',
     chat_template_kwargs=None,
@@ -4395,6 +4410,11 @@ kernels.lora.LoRA_MLP.forward(
     up_weight,
     up_bias,
     up_quant,
+```
+
+Continuation:
+
+```python
     up_A,
     up_B,
     up_scale,
@@ -4407,6 +4427,11 @@ kernels.lora.LoRA_MLP.forward(
     activation_fn,
     activation_fn_backward,
     inplace=True,
+```
+
+Continuation:
+
+```python
 )
 ```
 
@@ -4837,6 +4862,11 @@ utils.samplers.multipack.MultipackBatchSampler(
     group_size=100000,
     bin_size=200,
     num_processes=None,
+```
+
+Continuation:
+
+```python
     safe_mode=True,
     mp_start_method='fork',
     **kwargs,

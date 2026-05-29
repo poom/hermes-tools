@@ -1,0 +1,14 @@
+# Resolver Cases
+
+## Should Trigger
+
+- "Use axolotl for this workflow."
+- "Follow the Axolotl Skill procedure."
+- "Troubleshoot axolotl behavior."
+
+## Should Not Trigger
+
+- "Summarize this unrelated document."
+- "Run a generic code review with no mention of axolotl or its workflow."
+
+These cases prove the skill resolver routes to this skill for matching requests and should not trigger for unrelated work.

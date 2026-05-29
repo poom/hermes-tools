@@ -335,6 +335,11 @@ datasets:
   - path: ...
     type: chat_template
 
+```
+
+Continuation:
+
+```yaml
     field_messages: conversations
     message_property_mappings:
       role: from
@@ -347,6 +352,11 @@ datasets:
     type: chat_template
 
     field_messages: conversations
+```
+
+Continuation:
+
+```yaml
     message_property_mappings:
       role: from
       content: value
@@ -485,6 +495,11 @@ Example 4 (unknown):
         },
         {
             "label": false,
+```
+
+Continuation:
+
+```unknown
             "text": "goodbye "
         },
         {
@@ -497,7 +512,7 @@ Example 4 (unknown):
 
 ---
 
-## Dataset Formats
+## Dataset Formats (2)
 
 **URL:** https://docs.axolotl.ai/docs/dataset-formats/
 
@@ -710,7 +725,7 @@ datasets:
 
 ---
 
-## Dataset Formats
+## Dataset Formats (3)
 
 **URL:** https://docs.axolotl.ai/docs/dataset-formats
 

@@ -84,6 +84,11 @@ fsdp_config:
   cpu_ram_efficient_loading: true
   auto_wrap_policy: TRANSFORMER_BASED_WRAP
   transformer_layer_cls_to_wrap: LlamaDecoderLayer
+```
+
+Continuation:
+
+```yaml
   state_dict_type: FULL_STATE_DICT
   reshard_after_forward: true
 ```
@@ -494,6 +499,11 @@ chat_template:  # see in next section if specified
 datasets:
   - path: HuggingFaceH4/llava-instruct-mix-vsft
     type: chat_template
+```
+
+Continuation:
+
+```yaml
     split: train[:1%]
 
 # (optional) if doing lora, only finetune the Language model,
@@ -568,6 +578,11 @@ datasets:
     type: bradley_terry.chat_template
 
 val_set_size: 0.1
+```
+
+Continuation:
+
+```yaml
 eval_steps: 100
 ```
 
@@ -775,6 +790,11 @@ ORIGINAL_O_CODE = """
     attn_output = self.o_proj(attn_output)
 """.lstrip(
     "\n"
+```
+
+Continuation:
+
+```python
 )
 ```
 
@@ -792,6 +812,11 @@ PATCHED_QKV_CODE = """
 PATCHED_O_CODE = """
     attn_output = self.apply_o(attn_output)
 """.lstrip(
+```
+
+Continuation:
+
+```python
     "\n"
 )
 ```
@@ -928,7 +953,7 @@ Make sure the main machine is reachable by other machines.
 
 You will need to create a configuration for accelerate, either by using accelerate config and follow the instructions or you can use one of the preset below:
 
-~/.cache/huggingface/accelerate/default_config.yaml
+<home>/.cache/huggingface/accelerate/default_config.yaml
 
 Configure your model to use FSDP in the Axolotl yaml. For example:
 
@@ -964,6 +989,11 @@ mixed_precision: bf16
 num_machines: 2 # Change to the number of machines
 num_processes: 4 # That's the total number of GPUs, (for example: if you have 2 machines with 4 GPU, put 8)
 rdzv_backend: static
+```
+
+Continuation:
+
+```yaml
 same_network: true
 tpu_env: []
 tpu_use_cluster: false
@@ -1286,6 +1316,11 @@ Recent failures:
  (no failures)
 
 Resources
+```
+
+Continuation:
+
+```unknown
 ---------------------------------------------------------------
 Usage:
  0.0/96.0 CPU
@@ -1375,12 +1410,17 @@ sequence_len: 8192
 ...
 
 context_parallel_size: 4  # Split each sequence into 4 parts, one per GPU
-# Optional; strides across the key dimension. Larger values use more memory but should make training faster.
+# Optional; strides across the key dimension. Larger values use more memory but should make training faster. (2)
 heads_k_stride: 1
-# Optional; one of "varlen_llama3" or "batch_ring". Defaults to
-# "varlen_llama3" when `sample_packing: true`, and "batch_ring" otherwise.
+# Optional; one of "varlen_llama3" or "batch_ring". Defaults to (2)
+# "varlen_llama3" when `sample_packing: true`, and "batch_ring" otherwise. (2)
 ring_attn_func:
 
+```
+
+Continuation:
+
+```yaml
 ...
 ```
 
@@ -1655,6 +1695,11 @@ auto_resume_from_checkpoints: bool | None
 resize_token_embeddings_to_32x: bool | None
 mean_resizing_embeddings: bool | None = False
 
+```
+
+Continuation:
+
+```yaml
 # Whether to shrink the embeddings to len(tokenizer). By default, we won't shrink.
 shrink_embeddings: bool | None
 # Don't upcast the embeddings to float32 when using PEFT. Useful for low-VRAM GPUs
@@ -1667,6 +1712,11 @@ trainer_cls: str | None
 
 # Use RL training: 'dpo', 'ipo', 'kto', 'simpo', 'orpo', 'grpo'
 rl: RLType | None
+```
+
+Continuation:
+
+```yaml
 
 trl: TRLConfig | None
   # For TRLConfig:
@@ -1679,6 +1729,11 @@ trl: TRLConfig | None
   use_vllm: bool = False
   # VLLM mode to use, one of 'server' or 'colocate'
   vllm_mode: Literal['server', 'colocate'] | None
+```
+
+Continuation:
+
+```yaml
   # Host of the vLLM server to connect to.
   vllm_server_host: str | None = 0.0.0.0
   # Port of the vLLM server to connect to.
@@ -1691,6 +1746,11 @@ trl: TRLConfig | None
   # List of reward functions to load. Paths must be importable from current dir.
   reward_funcs: list[str] | None
   # List of reward weights for the reward functions.
+```
+
+Continuation:
+
+```yaml
   reward_weights: list[float] | None
   # Number of generations to sample.
   num_generations: int | None
@@ -1703,6 +1763,11 @@ trl: TRLConfig | None
   # the original GRPO paper.
   importance_sampling_level: Literal['sequence', 'token'] | None
 
+```
+
+Continuation:
+
+```yaml
   # Whether to sync the reference model.
   sync_ref_model: bool | None = False
   # Mixup alpha for the reference model.
@@ -1715,6 +1780,11 @@ trl: TRLConfig | None
   # Sampling temperature for the GRPO policy.
   temperature: float | None
   # Top-p sampling probability for the generation policy.
+```
+
+Continuation:
+
+```yaml
   top_p: float | None
   # Top-k sampling for the generation policy.
   top_k: int | None
@@ -1727,6 +1797,11 @@ trl: TRLConfig | None
   # Epsilon value for clipping in the GRPO algorithm.
   epsilon: float | None
   # Upper-bound epsilon value for clipping in the GRPO algorithm.
+```
+
+Continuation:
+
+```yaml
   epsilon_high: float | None
   # Whether to use Liger loss for GRPO.
   use_liger_loss: bool | None
@@ -1739,6 +1814,11 @@ trl: TRLConfig | None
 
 vllm: VllmConfig | None
   # For VllmConfig:
+```
+
+Continuation:
+
+```yaml
   # Device to use for VLLM
   device: str | None = auto
   # Tensor parallel size for VLLM
@@ -1751,6 +1831,11 @@ vllm: VllmConfig | None
   dtype: str | None = auto
   # Maximum length of the model context for VLLM
   max_model_len: int | None
+```
+
+Continuation:
+
+```yaml
   # Enable prefix caching for VLLM
   enable_prefix_caching: bool | None
   # Host for the vLLM server to start on
@@ -1763,6 +1848,11 @@ vllm: VllmConfig | None
   # Reasoning parser for VLLM
   reasoning_parser: str | None
 
+```
+
+Continuation:
+
+```yaml
 qat: QATConfig | None
   # For QATConfig:
   # Fake quantization layout to use for activation quantization.
@@ -1775,6 +1865,11 @@ qat: QATConfig | None
   group_size: int | None = 32
   # The number of steps to apply fake quantization after
   fake_quant_after_n_steps: int | None
+```
+
+Continuation:
+
+```yaml
 
 quantization: PTQConfig | None
   # For PTQConfig:
@@ -1787,6 +1882,11 @@ quantization: PTQConfig | None
   # The number of elements in each group for per-group fake quantization
   group_size: int | None = 32
 
+```
+
+Continuation:
+
+```yaml
 # Reward modelling: `True` or `False`
 reward_model: bool | None
 # Process reward modelling: `True` or `False`
@@ -1799,6 +1899,11 @@ num_labels: int | None
 # Whether to perform weighting in DPO trainer
 dpo_use_weighting: bool | None
 dpo_use_logits_to_keep: bool | None
+```
+
+Continuation:
+
+```yaml
 dpo_label_smoothing: float | None
 dpo_norm_loss: bool | None
 dpo_padding_free: bool | None
@@ -1811,6 +1916,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   path: str | None
   # name of dataset split to load from
   split: str | None
+```
+
+Continuation:
+
+```yaml
   # The type of prompt to use for training. [alpaca, gpteacher, oasst, reflection]
   type: str | UserDefinedPrompterType | None
     # For UserDefinedPrompterType:
@@ -1823,6 +1933,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
     field_input: str | None
     field_output: str | None
 
+```
+
+Continuation:
+
+```yaml
     # Customizable to be single line or multi-line. Use {instruction}/{input} as key to
     # be replaced. 'format' can include {input}
     format: str | None
@@ -1835,6 +1950,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   shards_idx: int | None
   # process dataset in N sequential chunks for memory efficiency (exclusive with
   # `shards`)
+```
+
+Continuation:
+
+```yaml
   preprocess_shards: int | None
   conversation: str | None
 
@@ -1847,6 +1967,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   # tokenizer_default_fallback_*: where * is the name of the chat template to fallback
   # to if the tokenizer does not have a chat template else default to tokenizer. E.g.
   # tokenizer_default_fallback_chatml. jinja: Uses a custom jinja template for the chat
+```
+
+Continuation:
+
+```yaml
   # template. The custom jinja template should be provided in the chat_template_jinja
   # field.
   chat_template: ChatTemplate | str | None
@@ -1859,6 +1984,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   # name of dataset configuration to load
   name: str | None
   # defines the datatype when path is a file
+```
+
+Continuation:
+
+```yaml
   ds_type: str | None
   # For `completion` datasets only, uses the provided field instead of `text` column
   field: str | None
@@ -1871,6 +2001,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   field_tools: str | None
   # Key containing the reasoning trace (default: "reasoning_content").
   field_thinking: str | None
+```
+
+Continuation:
+
+```yaml
   # The key the chat template expects that indicates the reasoning trace.
   template_thinking_key: str | None
 
@@ -1883,6 +2018,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   # from the message using the property name as the key. Example: In the mapping below,
   # 'from' is loaded from input dataset and used as 'role', while 'value' is loaded and
   # used as 'content' in the chat template.
+```
+
+Continuation:
+
+```yaml
   message_property_mappings: dict[str, str] | None
   # The key in the message turn that indicates via boolean whether tokens of a turn
   # should be considered for training. Useful to selectively train on certain turns
@@ -1895,6 +2035,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   message_field_training_detail: str | None
   # (for Qwen3 template only) Whether to split the assistant content based on a
   # reasoning trace inside delimited tags
+```
+
+Continuation:
+
+```yaml
   split_thinking: bool | None
   logprobs_field: str | None
   temperature: float | None
@@ -1907,6 +2052,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   # Roles mapping in the messages. The format is {target_role: [source_roles]}. All
   # source roles will be mapped to the target role. The default is: user: ["human",
   # "user"], assistant: ["gpt", "assistant"], system: ["system"], tool: ["tool"]
+```
+
+Continuation:
+
+```yaml
   roles: dict[str, list[str]] | None
   # Whether to drop the system turn from the dataset. Only works with chat_template.
   # This does not drop the default system message from chat_template if it exists. If
@@ -1919,6 +2069,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   # This can be a commit hash, tag, or branch name. If not specified, the latest version
   # will be used. This parameter is ignored for local datasets.
   revision: str | None
+```
+
+Continuation:
+
+```yaml
 
   # For DPODataset:
   path: str | None
@@ -1931,6 +2086,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
     field_rejected: str | None
     prompt_format: str | None
     chosen_format: str | None
+```
+
+Continuation:
+
+```yaml
     rejected_format: str | None
   data_files: list[str] | None
   revision: str | None
@@ -1943,6 +2103,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
     # For UserDefinedKTOType:
     field_system: str | None
     field_prompt: str | None
+```
+
+Continuation:
+
+```yaml
     field_completion: str | None
     field_label: bool | None
     prompt_format: str | None
@@ -1955,6 +2120,11 @@ datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSupervis
   path: str | None
   split: str | None
   data_files: list[str] | None
+```
+
+Continuation:
+
+```yaml
   revision: str | None
   step_separator: str | None
   max_completion_length: int | None
@@ -1967,6 +2137,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # HuggingFace dataset repo | s3:// | gs:// | path to local file or directory
   path: str | None
   # name of dataset split to load from
+```
+
+Continuation:
+
+```yaml
   split: str | None
   # The type of prompt to use for training. [alpaca, gpteacher, oasst, reflection]
   type: str | UserDefinedPrompterType | None
@@ -1979,6 +2154,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
     field_instruction: str | None
     field_input: str | None
     field_output: str | None
+```
+
+Continuation:
+
+```yaml
 
     # Customizable to be single line or multi-line. Use {instruction}/{input} as key to
     # be replaced. 'format' can include {input}
@@ -1991,6 +2171,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # the index of sharded dataset to use
   shards_idx: int | None
   # process dataset in N sequential chunks for memory efficiency (exclusive with
+```
+
+Continuation:
+
+```yaml
   # `shards`)
   preprocess_shards: int | None
   conversation: str | None
@@ -2003,6 +2188,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # are available in the axolotl codebase at src/axolotl/utils/chat_templates.py.
   # tokenizer_default_fallback_*: where * is the name of the chat template to fallback
   # to if the tokenizer does not have a chat template else default to tokenizer. E.g.
+```
+
+Continuation:
+
+```yaml
   # tokenizer_default_fallback_chatml. jinja: Uses a custom jinja template for the chat
   # template. The custom jinja template should be provided in the chat_template_jinja
   # field.
@@ -2015,6 +2205,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   input_format: str | None
   # name of dataset configuration to load
   name: str | None
+```
+
+Continuation:
+
+```yaml
   # defines the datatype when path is a file
   ds_type: str | None
   # For `completion` datasets only, uses the provided field instead of `text` column
@@ -2027,6 +2222,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # schema](https://json-schema.org/learn/getting-started-step-by-step).
   field_tools: str | None
   # Key containing the reasoning trace (default: "reasoning_content").
+```
+
+Continuation:
+
+```yaml
   field_thinking: str | None
   # The key the chat template expects that indicates the reasoning trace.
   template_thinking_key: str | None
@@ -2039,6 +2239,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # in the template but not in this mapping, the system will attempt to load it directly
   # from the message using the property name as the key. Example: In the mapping below,
   # 'from' is loaded from input dataset and used as 'role', while 'value' is loaded and
+```
+
+Continuation:
+
+```yaml
   # used as 'content' in the chat template.
   message_property_mappings: dict[str, str] | None
   # The key in the message turn that indicates via boolean whether tokens of a turn
@@ -2051,6 +2256,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # character index in content), and `train` (boolean whether to train).
   message_field_training_detail: str | None
   # (for Qwen3 template only) Whether to split the assistant content based on a
+```
+
+Continuation:
+
+```yaml
   # reasoning trace inside delimited tags
   split_thinking: bool | None
   logprobs_field: str | None
@@ -2063,6 +2273,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   train_on_eos: Literal['all', 'turn', 'last'] | None
   # Roles mapping in the messages. The format is {target_role: [source_roles]}. All
   # source roles will be mapped to the target role. The default is: user: ["human",
+```
+
+Continuation:
+
+```yaml
   # "user"], assistant: ["gpt", "assistant"], system: ["system"], tool: ["tool"]
   roles: dict[str, list[str]] | None
   # Whether to drop the system turn from the dataset. Only works with chat_template.
@@ -2075,6 +2290,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # The specific revision of the dataset to use when loading from the Hugging Face Hub.
   # This can be a commit hash, tag, or branch name. If not specified, the latest version
   # will be used. This parameter is ignored for local datasets.
+```
+
+Continuation:
+
+```yaml
   revision: str | None
 
   # For DPODataset:
@@ -2087,6 +2307,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
     field_chosen: str | None
     field_rejected: str | None
     prompt_format: str | None
+```
+
+Continuation:
+
+```yaml
     chosen_format: str | None
     rejected_format: str | None
   data_files: list[str] | None
@@ -2099,6 +2324,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   type: UserDefinedKTOType | str | None
     # For UserDefinedKTOType:
     field_system: str | None
+```
+
+Continuation:
+
+```yaml
     field_prompt: str | None
     field_completion: str | None
     field_label: bool | None
@@ -2111,6 +2341,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
   # For StepwiseSupervisedDataset:
   path: str | None
   split: str | None
+```
+
+Continuation:
+
+```yaml
   data_files: list[str] | None
   revision: str | None
   step_separator: str | None
@@ -2123,6 +2358,11 @@ test_datasets: Annotated[list[SFTDataset | DPODataset | KTODataset | StepwiseSup
 shuffle_merged_datasets: bool | None = True
 # If true, each dataset in `datasets` will be shuffled before merging. This allows
 # curriculum learning strategies to be applied at the dataset level. Default is false.
+```
+
+Continuation:
+
+```yaml
 shuffle_before_merging_datasets: bool | None = False
 # Axolotl attempts to save the dataset as an arrow after packing the data together so
 # subsequent training attempts load faster, relative path
@@ -2135,6 +2375,11 @@ skip_prepare_dataset: bool | None = False
 # Number of shards to save the prepared dataset
 num_dataset_shards_to_save: int | None
 
+```
+
+Continuation:
+
+```yaml
 # Set to HF dataset for type: 'completion' for streaming instead of pre-tokenize
 pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)] | None
   # For PretrainingDataset:
@@ -2147,6 +2392,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
   data_files: str | None
   skip: int | None
 
+```
+
+Continuation:
+
+```yaml
   # For SFTDataset:
   # HuggingFace dataset repo | s3:// | gs:// | path to local file or directory
   path: str | None
@@ -2159,6 +2409,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
     system_prompt: str | None
     # Use {system} as key to be replaced
     system_format: str | None
+```
+
+Continuation:
+
+```yaml
     field_system: str | None
     field_instruction: str | None
     field_input: str | None
@@ -2171,6 +2426,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
     no_input_format: str | None
   input_transform: str | None
   # split dataset into N pieces (use with shards_idx)
+```
+
+Continuation:
+
+```yaml
   shards: int | None
   # the index of sharded dataset to use
   shards_idx: int | None
@@ -2183,6 +2443,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
   # tokenizer_default: Uses the chat template that is available in the
   # tokenizer_config.json. If the chat template is not available in the tokenizer, it
   # will raise an error. This is the default.
+```
+
+Continuation:
+
+```yaml
   # alpaca/inst/chatml/gemma/cohere/llama3/phi_3/deepseek_v2/jamba: These chat templates
   # are available in the axolotl codebase at src/axolotl/utils/chat_templates.py.
   # tokenizer_default_fallback_*: where * is the name of the chat template to fallback
@@ -2195,6 +2460,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
   # jinja` or empty.
   chat_template_jinja: str | None
   # path to source data files
+```
+
+Continuation:
+
+```yaml
   data_files: str | list[str] | None
   input_format: str | None
   # name of dataset configuration to load
@@ -2207,6 +2477,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
   field_model: str | None
   # Key containing the messages (default: "messages")
   field_messages: str | None
+```
+
+Continuation:
+
+```yaml
   # Key containing the tools (default: "tools"). Must be a list[dict] and follow [JSON
   # schema](https://json-schema.org/learn/getting-started-step-by-step).
   field_tools: str | None
@@ -2219,6 +2494,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
 
   message_field_content: str | None
   # Mapping of properties from the input dataset to the chat template. (default:
+```
+
+Continuation:
+
+```yaml
   # message_property_mappings={'role':'role', 'content':'content'}) If a property exists
   # in the template but not in this mapping, the system will attempt to load it directly
   # from the message using the property name as the key. Example: In the mapping below,
@@ -2231,6 +2511,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
   message_field_training: str | None
   # The key in the message turn that contains the training details. Useful to
   # selectively train on certain tokens in a turn. The value of the key is a List[Dict]
+```
+
+Continuation:
+
+```yaml
   # containing `begin_offset` (start character index in content), `end_offset` (end
   # character index in content), and `train` (boolean whether to train).
   message_field_training_detail: str | None
@@ -2243,6 +2528,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
   roles_to_train: list[str] | None
   # Which EOS tokens to train on in the conversation. Possible values are: all: train on
   # all EOS tokens, turn (default): train on the EOS token at the end of each trainable
+```
+
+Continuation:
+
+```yaml
   # turn, last: train on the last EOS token in the conversation
   train_on_eos: Literal['all', 'turn', 'last'] | None
   # Roles mapping in the messages. The format is {target_role: [source_roles]}. All
@@ -2255,6 +2545,11 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
   # message removed or adding a system turn with empty content.
   drop_system_message: bool | None
   # Trust remote code for untrusted source
+```
+
+Continuation:
+
+```yaml
   trust_remote_code: bool | None = False
   # The specific revision of the dataset to use when loading from the Hugging Face Hub.
   # This can be a commit hash, tag, or branch name. If not specified, the latest version
@@ -2265,9 +2560,14 @@ pretraining_dataset: Annotated[list[PretrainingDataset | SFTDataset], MinLen(1)]
 # defaults to `os.cpu_count()` if not set. For Runpod VMs, it will default to number of
 # vCPUs via RUNPOD_CPU_COUNT.
 dataset_processes: int | None
-# The maximum number of processes to use while preprocessing your input dataset. This
-# defaults to `os.cpu_count()` if not set. For Runpod VMs, it will default to number of
-# vCPUs via RUNPOD_CPU_COUNT.
+# The maximum number of processes to use while preprocessing your input dataset. This (2)
+# defaults to `os.cpu_count()` if not set. For Runpod VMs, it will default to number of (2)
+```
+
+Continuation:
+
+```yaml
+# vCPUs via RUNPOD_CPU_COUNT. (2)
 dataset_num_proc: int | None
 
 # Deduplicates datasets and test_datasets with identical entries
@@ -2279,6 +2579,11 @@ dataloader_pin_memory: bool | None
 dataloader_num_workers: int | None
 dataloader_prefetch_factor: int | None
 dataloader_drop_last: bool | None
+```
+
+Continuation:
+
+```yaml
 
 accelerator_config: dict[str, Any] | None
 
@@ -2291,6 +2596,11 @@ push_dataset_to_hub: str | None
 hf_use_auth_token: bool | None
 
 device: Any | None
+```
+
+Continuation:
+
+```yaml
 # Passed through to transformers when loading the model when launched without
 # accelerate. Use `sequential` when training w/ model parallelism to limit memory
 device_map: Any | None
@@ -2303,6 +2613,11 @@ ddp: bool | None
 seed: int | None
 # Advanced DDP Arguments - timeout
 ddp_timeout: int | None
+```
+
+Continuation:
+
+```yaml
 # Advanced DDP Arguments - bucket cap in MB
 ddp_bucket_cap_mb: int | None
 # Advanced DDP Arguments - broadcast buffers
@@ -2315,6 +2630,11 @@ eval_table_size: int | None
 # Total number of tokens generated for predictions sent to wandb. Default is 128
 eval_max_new_tokens: int | None
 # Whether to run causal language model evaluation for metrics in
+```
+
+Continuation:
+
+```yaml
 # `eval_causal_lm_metrics`
 do_causal_lm_eval: bool | None
 # HF evaluate metrics used during evaluation. Default is ['sacrebleu', 'comet', 'ter',
@@ -2327,6 +2647,11 @@ metric_for_best_model: str | None
 greater_is_better: bool | None
 
 # High loss value, indicating the learning has broken down (a good estimate is ~2 times
+```
+
+Continuation:
+
+```yaml
 # the loss at the start of training)
 loss_watchdog_threshold: float | None
 # Number of high-loss steps in a row before the trainer aborts (default: 3)
@@ -2339,6 +2664,11 @@ gc_steps: int | None
 # Use CUDA bf16. bool or 'full' for `bf16_full_eval`, or 'auto' for automatic detection.
 # require >=ampere
 bf16: Literal['auto'] | bool | None = auto
+```
+
+Continuation:
+
+```yaml
 # Use CUDA fp16
 fp16: bool | None
 # Enable FP8 mixed precision training using TorchAO. Best used in combination with
@@ -2351,6 +2681,11 @@ fp8_enable_fsdp_float8_all_gather: bool | None
 bfloat16: bool | None
 # No AMP (automatic mixed precision)
 float16: bool | None
+```
+
+Continuation:
+
+```yaml
 # Use CUDA tf32 - require >=ampere
 tf32: bool | None
 float32: bool | None
@@ -2363,6 +2698,11 @@ gradient_checkpointing: Literal['offload', 'offload_disk'] | bool | None = False
 gradient_checkpointing_kwargs: dict[str, Any] | None
 # Whether to offload activations. Available options are: true, false, 'legacy', 'disk'.
 activation_offloading: Literal['legacy', 'disk'] | bool | None = False
+```
+
+Continuation:
+
+```yaml
 
 unfrozen_parameters: list[str] | None
 
@@ -2375,6 +2715,11 @@ sequence_len: int = 512
 excess_length_strategy: Literal['drop', 'truncate'] | None
 # The maximum length of an input for evaluation. If not specified, defaults to
 # sequence_len
+```
+
+Continuation:
+
+```yaml
 eval_sequence_len: int | None
 min_sample_len: int | None
 # maximum prompt length for RL training
@@ -2387,6 +2732,11 @@ sample_packing: bool | None
 sample_packing_group_size: int | None = 100000
 # The number of samples which can be packed into one sequence. Increase if using a large
 # sequence_len with many short samples.
+```
+
+Continuation:
+
+```yaml
 sample_packing_bin_size: int | None = 200
 # Whether to pack samples sequentially
 sample_packing_sequentially: bool | None
@@ -2399,6 +2749,11 @@ eval_sample_packing: bool | None
 # fragmentation and may prevent OOMs, by re-using memory more efficiently. Defaults to
 # True if `sample_packing` enabled
 pad_to_sequence_len: bool | None
+```
+
+Continuation:
+
+```yaml
 # Whether to use sequential sampling for curriculum learning
 curriculum_sampling: bool | None
 multipack_real_batches: bool | None
@@ -2411,6 +2766,11 @@ pose_split_on_token_ids: list[int] | None
 pose_max_context_len: int | None
 pose_num_chunks: int | None
 
+```
+
+Continuation:
+
+```yaml
 pretrain_multipack_buffer_size: int | None
 # whether to prevent cross attention for packed sequences during pretraining
 pretrain_multipack_attn: bool | None = True
@@ -2423,6 +2783,11 @@ streaming: bool | None
 streaming_multipack_buffer_size: int | None = 10000
 
 # Whether to use xformers attention patch https://github.com/facebookresearch/xformers
+```
+
+Continuation:
+
+```yaml
 xformers_attention: bool | None
 # Whether to use scaled-dot-product attention https://pytorch.org/docs/stable/generated/
 # torch.nn.functional.scaled_dot_product_attention.html
@@ -2435,6 +2800,11 @@ flex_attn_compile_kwargs: dict[str, Any] | None
 flash_attention: bool | None
 # Whether to use flash-attention cross entropy implementation - advanced use only
 flash_attn_cross_entropy: bool | None
+```
+
+Continuation:
+
+```yaml
 # Whether to use flash-attention rms norm implementation - advanced use only
 flash_attn_rms_norm: bool | None
 # Whether to fuse part of the MLP into a single operation
@@ -2447,6 +2817,11 @@ eager_attention: bool | None
 # Specify a custom attention implementation, used mostly for kernels.
 attn_implementation: str | None
 
+```
+
+Continuation:
+
+```yaml
 unsloth_cross_entropy_loss: bool | None
 unsloth_lora_mlp: bool | None
 unsloth_lora_qkv: bool | None
@@ -2457,11 +2832,16 @@ unsloth_rope: bool | None
 # Apply custom LoRA autograd functions and activation function Triton kernels for speed
 # and memory savings. See: https://docs.axolotl.ai/docs/lora_optims.html
 lora_mlp_kernel: bool | None
-# Apply custom LoRA autograd functions and activation function Triton kernels for speed
-# and memory savings. See: https://docs.axolotl.ai/docs/lora_optims.html
+# Apply custom LoRA autograd functions and activation function Triton kernels for speed (2)
+# and memory savings. See: https://docs.axolotl.ai/docs/lora_optims.html (2)
+```
+
+Continuation:
+
+```yaml
 lora_qkv_kernel: bool | None
-# Apply custom LoRA autograd functions and activation function Triton kernels for speed
-# and memory savings. See: https://docs.axolotl.ai/docs/lora_optims.html
+# Apply custom LoRA autograd functions and activation function Triton kernels for speed (3)
+# and memory savings. See: https://docs.axolotl.ai/docs/lora_optims.html (3)
 lora_o_kernel: bool | None
 
 # Whether to use chunked cross entropy loss for memory efficiency
@@ -2471,6 +2851,11 @@ chunked_cross_entropy_num_chunks: int | None
 
 # Whether to use ALST tiled mlp for memory efficient long context
 tiled_mlp: bool | None
+```
+
+Continuation:
+
+```yaml
 
 # Number of shards to use for ALST tiled mlp. If unset, it will be set based on
 # seqlen/hidden_size
@@ -2483,10 +2868,15 @@ tiled_mlp_use_original_mlp: bool | None = True
 llama4_linearized_experts: bool | None
 
 # Deepspeed config path. e.g., deepspeed_configs/zero3.json
+```
+
+Continuation:
+
+```yaml
 deepspeed: str | dict[str, Any] | None
 # Whether to use deepcompile for faster training with deepspeed
 deepcompile: bool | None
-# FSDP configuration
+# FSDP configuration (2)
 fsdp: list[str] | None
 
 # FSDP configuration options
@@ -2495,6 +2885,11 @@ fsdp_config: FSDPConfig | None
   # Enable activation checkpointing to reduce memory usage during forward passes
   activation_checkpointing: bool | None
   # Offload parameters to CPU to reduce GPU memory usage
+```
+
+Continuation:
+
+```yaml
   offload_params: bool | None
   # Synchronize module states across all processes
   sync_module_states: bool | None
@@ -2507,6 +2902,11 @@ fsdp_config: FSDPConfig | None
   use_orig_params: bool | None
 
   # Type of state dict to use for saving/loading checkpoints
+```
+
+Continuation:
+
+```yaml
   state_dict_type: Literal['FULL_STATE_DICT', 'LOCAL_STATE_DICT', 'SHARDED_STATE_DICT'] | None
   # Final state dict type to use after training completion
   final_state_dict_type: Literal['FULL_STATE_DICT', 'LOCAL_STATE_DICT', 'SHARDED_STATE_DICT'] | None
@@ -2519,6 +2919,11 @@ fsdp_config: FSDPConfig | None
   # Reshard parameters after forward pass to save memory
   reshard_after_forward: bool | None
   # Mixed precision policy for FSDP (e.g., 'fp16', 'bf16')
+```
+
+Continuation:
+
+```yaml
   mixed_precision_policy: str | None
 
 # FSDP version
@@ -2531,6 +2936,11 @@ val_set_size: float | None = 0.0
 
 # Number of devices to shard across. If not set, will use all available devices.
 dp_shard_size: int | None
+```
+
+Continuation:
+
+```yaml
 # Number of devices to replicate across.
 dp_replicate_size: int | None
 # Deprecated: use `context_parallel_size` instead
@@ -2543,6 +2953,11 @@ sequence_parallel_degree: int | None
 # details.
 context_parallel_size: int | None
 # Optional; strides across the key dimension. Larger values use more memory but should
+```
+
+Continuation:
+
+```yaml
 # make training faster. Must evenly divide the number of KV heads in your model.
 heads_k_stride: int | None
 # One of 'varlen_llama3', 'batch_ring', 'batch_zigzag', 'batch_stripe'. Defaults to
@@ -2555,6 +2970,11 @@ tensor_parallel_size: int | None
 # Add or change special tokens. If you add tokens here, you don't need to add them to
 # the `tokens` list.
 special_tokens: SpecialTokensConfig | None
+```
+
+Continuation:
+
+```yaml
   # For SpecialTokensConfig:
   bos_token: str | None
   eos_token: str | None
@@ -2567,6 +2987,11 @@ tokens: list[str] | None
 # Mapping token_id to new_token_string to override reserved added_tokens in the
 # tokenizer. Only works for tokens that are not part of the base vocab (aka are
 # added_tokens). Can be checked if they exist in tokenizer.json added_tokens.
+```
+
+Continuation:
+
+```yaml
 added_tokens_overrides: dict[int, str] | None
 
 # Whether to use torch.compile and which backend to use. setting to `auto` will enable
@@ -2579,6 +3004,11 @@ torch_compile_mode: Literal['default', 'reduce-overhead', 'max-autotune'] | None
 # Maximum number of iterations to train for. It precedes num_epochs which means that if
 # both are set, num_epochs will not be guaranteed. e.g., when 1 epoch is 1000 steps =>
 # `num_epochs: 2` and `max_steps: 100` will train for 100 steps
+```
+
+Continuation:
+
+```yaml
 max_steps: int | None
 # Number of warmup steps. Cannot use with warmup_ratio
 warmup_steps: int | None
@@ -2591,10 +3021,15 @@ eval_steps: int | float | None
 evals_per_epoch: int | None
 # Set to `no` to skip evaluation, `epoch` at end of each epoch, leave empty to infer
 # from `eval_steps`
+```
+
+Continuation:
+
+```yaml
 eval_strategy: str | None
 
 # Leave empty to save at each epoch, integer for every N steps. float for fraction of
-# total steps
+# total steps (2)
 save_steps: int | float | None
 # Number of times per epoch to save a checkpoint, mutually exclusive with save_steps
 saves_per_epoch: int | None
@@ -2603,6 +3038,11 @@ saves_per_epoch: int | None
 save_strategy: str | None
 # Checkpoints saved at a time
 save_total_limit: int | None
+```
+
+Continuation:
+
+```yaml
 # Whether to checkpoint a model after the first step of training. Defaults to False.
 save_first_step: bool | None
 
@@ -2615,6 +3055,11 @@ early_stopping_patience: int | None
 load_best_model_at_end: bool | None = False
 # Save only the model weights, skipping the optimizer. Using this means you can't resume
 # from checkpoints.
+```
+
+Continuation:
+
+```yaml
 save_only_model: bool | None = False
 # Use tensorboard for logging
 use_tensorboard: bool | None
@@ -2627,6 +3072,11 @@ profiler_steps_start: int | None = 0
 # bool of whether to report tokens per second at the end of training. This is not
 # supported with pre-training datasets.
 include_tokens_per_second: bool | None
+```
+
+Continuation:
+
+```yaml
 # bool of whether to report tokens per second per-gpu during training by measuring
 # throughput of non-padding tokens.
 include_tkps: bool | None = True
@@ -2639,6 +3089,11 @@ neftune_noise_alpha: float | None
 orpo_alpha: float | None
 # Weighting of NLL term in loss from RPO paper
 rpo_alpha: float | None
+```
+
+Continuation:
+
+```yaml
 # Target reward margin for the SimPO loss
 simpo_gamma: float | None
 # Weight of the BC regularizer
@@ -2651,6 +3106,11 @@ kto_undesirable_weight: float | None
 # The beta parameter for the RL training
 rl_beta: float | None
 
+```
+
+Continuation:
+
+```yaml
 # Defines the max memory usage per gpu on the system. Passed through to transformers
 # when loading the model.
 max_memory: dict[int | Literal['cpu', 'disk'], int | str] | None
@@ -2663,6 +3123,11 @@ low_cpu_mem_usage: bool | None
 # The name of the chat template to use for training, following values are supported:
 # tokenizer_default: Uses the chat template that is available in the
 # tokenizer_config.json. If the chat template is not available in the tokenizer, it will
+```
+
+Continuation:
+
+```yaml
 # raise an error. This is the default value.
 # alpaca/inst/chatml/gemma/cohere/llama3/phi_3/deepseek_v2/jamba: These chat templates
 # are available in the axolotl codebase at src/axolotl/utils/chat_templates.py.
@@ -2675,6 +3140,11 @@ low_cpu_mem_usage: bool | None
 chat_template: ChatTemplate | Annotated[str, StringConstraints(pattern='^tokenizer_default_fallback_')] | None
 # Custom jinja template or path to jinja file for chat template. This will be only used
 # if chat_template is set to `jinja` or `null` (in which case chat_template is
+```
+
+Continuation:
+
+```yaml
 # automatically set to `jinja`). Default is null.
 chat_template_jinja: str | None
 # Additional kwargs to pass to the chat template. This is useful for customizing the
@@ -2687,6 +3157,11 @@ chat_template_kwargs: dict[str, Any] | None
 # useful for templates that use multiple delimiter tokens.
 eot_tokens: list[str] | None
 # Changes the default system message. Currently only supports chatml.
+```
+
+Continuation:
+
+```yaml
 default_system_message: str | None
 
 # Token index or indices to adjust embedding weights to the mean of the other tokens.
@@ -2699,6 +3174,11 @@ preprocess_iterable: bool | None
 # Total number of tokens - internal use
 total_num_tokens: int | None
 total_supervised_tokens: int | None
+```
+
+Continuation:
+
+```yaml
 # You can set these packing optimizations AFTER starting a training at least once. The
 # trainer will provide recommended values for these values.
 sample_packing_eff_est: float | None
@@ -2706,12 +3186,17 @@ axolotl_config_path: str | None
 
 # Internal use only - Used to identify which the model is based on
 is_falcon_derived_model: bool | None
-# Internal use only - Used to identify which the model is based on
+# Internal use only - Used to identify which the model is based on (2)
 is_llama_derived_model: bool | None
 # Internal use only - Used to identify which the model is based on. Please note that if
 # you set this to true, `padding_side` will be set to 'left' by default
 is_mistral_derived_model: bool | None
-# Internal use only - Used to identify which the model is based on
+```
+
+Continuation:
+
+```yaml
+# Internal use only - Used to identify which the model is based on (3)
 is_qwen_derived_model: bool | None
 
 # Add plugins to extend the pipeline. See `src/axolotl/integrations` for the available
@@ -2723,6 +3208,11 @@ plugins: list[str] | None
 # can also be a relative path to a model on disk
 base_model: str (required)
 # If the base_model repo on hf hub doesn't include configuration .json files, You can
+```
+
+Continuation:
+
+```yaml
 # set that here, or leave this empty to default to base_model
 base_model_config: str | None
 cls_model_config: str | None
@@ -2735,6 +3225,11 @@ tokenizer_use_fast: bool | None
 tokenizer_legacy: bool | None
 # Whether to use mistral-common tokenizer. If set to True, it will use the mistral-
 # common tokenizer.
+```
+
+Continuation:
+
+```yaml
 tokenizer_use_mistral_common: bool | None
 # Corresponding tokenizer for the model AutoTokenizer is a good choice
 tokenizer_type: str | None
@@ -2747,6 +3242,11 @@ trust_remote_code: bool | None
 
 # Don't move the model to the device before sharding. Set to `false` to revert to legacy
 # behavior.
+```
+
+Continuation:
+
+```yaml
 experimental_skip_move_to_device: bool | None = True
 
 # Use custom kernels, e.g. MegaBlocks.
@@ -2759,6 +3259,11 @@ model_quantization_config_kwargs: dict[str, Any] | None
 
 # Where to save the full-finetuned model to
 output_dir: str = ./model-out
+```
+
+Continuation:
+
+```yaml
 # push checkpoints to hub
 hub_model_id: str | None
 # how to push checkpoints to hub
@@ -2771,6 +3276,11 @@ load_in_8bit: bool | None = False
 # Use bitsandbytes 4 bit
 load_in_4bit: bool | None = False
 
+```
+
+Continuation:
+
+```yaml
 # If you want to use 'lora' or 'qlora' or leave blank to train all parameters in
 # original model
 adapter: str | None
@@ -2783,6 +3293,11 @@ lora_r: int | None
 lora_alpha: int | None
 lora_fan_in_fan_out: bool | None
 lora_target_modules: str | list[str] | None
+```
+
+Continuation:
+
+```yaml
 lora_target_parameters: str | list[str] | None
 # If true, will target all linear modules
 lora_target_linear: bool | None
@@ -2795,6 +3310,11 @@ lora_dropout: float | None = 0.0
 # The layer indices to transform, otherwise, apply to all layers
 peft_layers_to_transform: list[int] | None
 peft_layers_pattern: list[str] | None
+```
+
+Continuation:
+
+```yaml
 
 peft: PeftConfig | None
   # For PeftConfig:
@@ -2807,6 +3327,11 @@ peft: PeftConfig | None
 # Whether to use DoRA.
 peft_use_dora: bool | None
 # Whether to use RSLoRA.
+```
+
+Continuation:
+
+```yaml
 peft_use_rslora: bool | None
 # List of layer indices to replicate.
 peft_layer_replication: list[tuple[int, int]] | None
@@ -2819,6 +3344,11 @@ peft_init_lora_weights: bool | str | None
 peft_trainable_token_indices: list[int] | dict[str, list[int]] | None
 
 # load qlora model in sharded format for FSDP using answer.ai technique.
+```
+
+Continuation:
+
+```yaml
 qlora_sharded_model_loading: bool | None = False
 # Do the LoRA/PEFT loading on CPU -- this is required if the base model is so large it
 # takes up most or all of the available GPU VRAM, e.g. during a model and LoRA merge
@@ -2831,6 +3361,11 @@ bnb_config_kwargs: dict[str, Any] | None
 # loraplus learning rate ratio lr_B / lr_A. Recommended value is 2^4.
 loraplus_lr_ratio: float | None
 # loraplus learning rate for lora embedding layers. Default value is 1e-6.
+```
+
+Continuation:
+
+```yaml
 loraplus_lr_embedding: float | None = 1e-06
 
 merge_lora: bool | None
@@ -2843,6 +3378,11 @@ relora_prune_ratio: float | None
 # savings
 relora_cpu_offload: bool | None
 
+```
+
+Continuation:
+
+```yaml
 # how often to reset for jagged restarts
 jagged_restart_steps: int | None
 # how many warmup steps to take after reset for jagged restarts
@@ -2855,6 +3395,11 @@ jagged_restart_anneal_steps: int | None
 gradient_accumulation_steps: int | None = 1
 # The number of samples to include in each batch. This is the number of samples sent to
 # each GPU. Batch size per gpu = micro_batch_size * gradient_accumulation_steps
+```
+
+Continuation:
+
+```yaml
 micro_batch_size: int | None = 1
 # Total batch size, we do not recommended setting this manually
 batch_size: int | None
@@ -2867,6 +3412,11 @@ auto_find_batch_size: bool | None
 
 # Whether to mask out or include the human's prompt from the training labels
 train_on_inputs: bool | None = False
+```
+
+Continuation:
+
+```yaml
 # Group similarly sized data to minimize padding. May be slower to start, as it must
 # download and sort the entire dataset. Note that training loss may have an oscillating
 # pattern with this enabled.
@@ -2879,6 +3429,11 @@ embedding_lr_scale: float | None
 weight_decay: float | None = 0.0
 # Specify optimizer
 optimizer: OptimizerNames | CustomSupportedOptimizers | None = OptimizerNames.ADAMW_TORCH_FUSED
+```
+
+Continuation:
+
+```yaml
 # Dictionary of arguments to pass to the optimizer
 optim_args: str | dict[str, Any] | None
 # The target modules to optimize, i.e. the module names that you would like to train,
@@ -2891,6 +3446,11 @@ lr_scheduler: SchedulerType | Literal['one_cycle'] | Literal['rex'] | None = Sch
 lr_scheduler_kwargs: dict[str, Any] | None
 lr_quadratic_warmup: bool | None
 # decay lr to some percentage of the peak lr, e.g. cosine_min_lr_ratio=0.1 for 10% of
+```
+
+Continuation:
+
+```yaml
 # peak lr
 cosine_min_lr_ratio: float | None
 # freeze lr at some percentage of the step, e.g. cosine_constant_lr_ratio=0.8 means
@@ -2903,18 +3463,28 @@ lr_groups: list[LrGroup] | None
   # For LrGroup:
   name: str (required)
   modules: list[str] (required)
+```
+
+Continuation:
+
+```yaml
   lr: float (required)
 
 # adamw hyperparams
 adam_epsilon: float | None
 # only used for CAME Optimizer
 adam_epsilon2: float | None
-# adamw hyperparams
+# adamw hyperparams (2)
 adam_beta1: float | None
-# adamw hyperparams
+# adamw hyperparams (3)
 adam_beta2: float | None
-# only used for CAME Optimizer
+# only used for CAME Optimizer (2)
 adam_beta3: float | None
+```
+
+Continuation:
+
+```yaml
 
 # Dion Optimizer learning rate
 dion_lr: float | None
@@ -2927,6 +3497,11 @@ dion_rank_fraction: float | None = 1.0
 # be useful to ensure even sharding.
 dion_rank_multiple_of: int | None = 1
 
+```
+
+Continuation:
+
+```yaml
 # Gradient clipping max norm
 max_grad_norm: float | None
 num_epochs: float = 1.0
@@ -2939,6 +3514,11 @@ wandb_run_id: str | None
 # "offline" to save run metadata locally and not sync to the server, "disabled" to turn
 # off wandb
 wandb_mode: str | None
+```
+
+Continuation:
+
+```yaml
 # Your wandb project name
 wandb_project: str | None
 # A wandb Team name if using a Team
@@ -2951,6 +3531,11 @@ wandb_log_model: str | None
 use_mlflow: bool | None
 # URI to mlflow
 mlflow_tracking_uri: str | None
+```
+
+Continuation:
+
+```yaml
 # Your experiment name
 mlflow_experiment_name: str | None
 # Your run name
@@ -2963,6 +3548,11 @@ use_comet: bool | None
 # API key for Comet. Recommended to set via `comet login`.
 comet_api_key: str | None
 # Workspace name in Comet. Defaults to the user's default workspace.
+```
+
+Continuation:
+
+```yaml
 comet_workspace: str | None
 # Project name in Comet. Defaults to Uncategorized.
 comet_project_name: str | None
@@ -2975,6 +3565,11 @@ comet_mode: str | None
 # Set to True to log data to Comet server, or False for offline storage. Default is
 # True.
 comet_online: bool | None
+```
+
+Continuation:
+
+```yaml
 # Dictionary for additional configuration settings, see the doc for more details.
 comet_experiment_config: dict[str, Any] | None
 
@@ -2987,6 +3582,11 @@ otel_metrics_port: int | None = 8000
 
 # the number of activate layers in LISA
 lisa_n_layers: int | None
+```
+
+Continuation:
+
+```yaml
 # how often to switch layers in LISA
 lisa_step_interval: int | None
 # path under the model to access the layers
@@ -2999,6 +3599,11 @@ gradio_server_port: int | None
 gradio_max_new_tokens: int | None
 gradio_temperature: float | None
 
+```
+
+Continuation:
+
+```yaml
 use_ray: bool = False
 ray_run_name: str | None
 ray_num_workers: int = 1
@@ -3011,6 +3616,11 @@ image_size: int | tuple[int, int] | None
 # The resampling algorithm to use for image resizing. Default is bilinear. Please refer
 # to PIL.Image.Resampling for more details.
 image_resize_algorithm: Literal['bilinear', 'bicubic', 'lanczos'] | Resampling | None
+```
+
+Continuation:
+
+```yaml
 
 # optional overrides to the base model configuration
 overrides_of_model_config: dict[str, Any] | None
@@ -3023,6 +3633,11 @@ type_of_model: str | None
 revision_of_model: str | None
 
 max_packed_sequence_len: int | None
+```
+
+Continuation:
+
+```yaml
 rope_scaling: Any | None
 noisy_embedding_alpha: float | None
 dpo_beta: float | None
@@ -3208,6 +3823,11 @@ learning_rate: 0.0003
 
 # Your dataset
 datasets:
+```
+
+Continuation:
+
+```yaml
   - path: my_data.jsonl        # Your local data file
     type: alpaca               # Or other format
 ```
@@ -3251,6 +3871,11 @@ Example 1 (unknown):
  [ H H H H ]]
 
 [[ I I I ]
+```
+
+Continuation:
+
+```unknown
  [ J J J ]
  [ K K K K K]
  [ L L L ]]
@@ -3270,6 +3895,11 @@ Example 2 (unknown):
  [ H H H H X X X X ]]
 
 [[ I I I X X ]
+```
+
+Continuation:
+
+```unknown
  [ J J J X X ]
  [ K K K K K ]
  [ L L L X X ]]
@@ -3321,6 +3951,11 @@ Example 1 (unknown):
 |----------------|----------------|----------------|
 | → (apply)      | → (apply)      | → (apply)      |
 
+```
+
+Continuation:
+
+```unknown
 Accumulated gradient for the weight w1 after the second iteration (considering all GPUs):
 Total gradient for w1 = e1 + e2 + e3 + e4 + e5 + e6 + e7 + e8 + e9 + e10 + e11 + e12 + e13 + e14 + e15 + e16 + e17 + e18
 
@@ -3464,6 +4099,11 @@ Example 4 (json):
             "args": [
                 "-m", "axolotl.cli.train", "dev_chat_template.yml",
                 // The flags below simplify debugging by overriding the axolotl config
+```
+
+Continuation:
+
+```json
                 // with the debugging tips above.  Modify as needed.
                 "--dataset_num_proc=1",      // limits data preprocessing to one process
                 "--max_steps=1",              // limits training to just one step
@@ -3476,6 +4116,11 @@ Example 4 (json):
                 "--output_dir=temp_debug/axolotl_outputs/model" // send model outputs to a temp folder
                 ],
             "console": "integratedTerminal",      // show output in the integrated terminal
+```
+
+Continuation:
+
+```json
             "cwd": "${workspaceFolder}/devtools", // set working directory to devtools from the root of the project
             "justMyCode": true,                   // step through only axolotl code
             "env": {"CUDA_VISIBLE_DEVICES": "0",  // Since we aren't doing distributed training, we need to limit to one GPU
