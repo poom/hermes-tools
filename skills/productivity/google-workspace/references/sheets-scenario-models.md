@@ -14,7 +14,7 @@ Use this when the user asks to build a new Sheets tab for budget/scenario analys
    ```bash
    mkdir -p /tmp/sheets_work
    rm -f /tmp/sheets_work/work_token.json
-   gog auth tokens export phathaisarn.c@ewa-services.com --client work --output /tmp/sheets_work/work_token.json --json >/dev/null
+   gog auth tokens export phathaisarn.c@example.com --client work --output /tmp/sheets_work/work_token.json --json >/dev/null
    ```
    Load OAuth client credentials from:
    `$HOME/Library/Application Support/gogcli/credentials-work.json`
