@@ -17,6 +17,11 @@ Use this as the structure for PR review summary comments. Copy and fill in the s
 <!-- Issues that MUST be fixed before merge -->
 - **file.py:line** — [description]. Suggestion: [fix].
 
+```
+
+Continuation:
+
+```markdown
 ### ⚠️ Warnings
 <!-- Issues that SHOULD be fixed, but not strictly blocking -->
 - **file.py:line** — [description].
@@ -29,6 +34,11 @@ Use this as the structure for PR review summary comments. Copy and fill in the s
 <!-- Call out things done well — positive reinforcement -->
 - [aspect that was done well]
 
+```
+
+Continuation:
+
+```markdown
 ---
 *Reviewed by Hermes Agent*
 ```
