@@ -15,7 +15,7 @@ Do not keep:
 
 ## Current inventory
 
-This snapshot contains 25 shared skills:
+This snapshot contains 26 shared skills:
 
 - `autonomous-ai-agents/codex` - local modification of a Hermes built-in skill
 - `autonomous-ai-agents/codex-daily-usage-record` - custom/local skill
@@ -25,6 +25,7 @@ This snapshot contains 25 shared skills:
 - `github/github-pr-workflow` - local modification of a Hermes built-in skill
 - `github/my-open-prs` - custom/local skill
 - `github/pending-pr-review` - custom/local skill
+- `github/pending-pr-review-github-issues-queue` - custom/local skill
 - `github/pr-review-guardrails` - custom/local skill
 - `gog` - custom/local skill
 - `mlops/inference/outlines` - custom/local skill
