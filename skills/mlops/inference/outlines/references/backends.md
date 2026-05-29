@@ -39,6 +39,11 @@ model = outlines.models.transformers(
     device="cuda:0"  # GPU 0
 )
 
+```
+
+Continuation:
+
+```python
 # Use CPU
 model = outlines.models.transformers(
     "microsoft/Phi-3-mini-4k-instruct",
@@ -67,6 +72,11 @@ model = outlines.models.transformers(
 # 8-bit quantization (less memory)
 model = outlines.models.transformers(
     "microsoft/Phi-3-mini-4k-instruct",
+```
+
+Continuation:
+
+```python
     device="cuda",
     model_kwargs={
         "load_in_8bit": True,
@@ -79,6 +89,11 @@ model = outlines.models.transformers(
     "meta-llama/Llama-3.1-70B-Instruct",
     device="cuda",
     model_kwargs={
+```
+
+Continuation:
+
+```python
         "load_in_4bit": True,
         "device_map": "auto",
         "bnb_4bit_compute_dtype": "float16"
@@ -91,6 +106,11 @@ model = outlines.models.transformers(
     device="cuda",
     model_kwargs={
         "device_map": "auto",  # Automatic GPU distribution
+```
+
+Continuation:
+
+```python
         "max_memory": {0: "40GB", 1: "40GB"}  # Per-GPU limits
     }
 )
@@ -111,6 +131,11 @@ model = outlines.models.transformers("meta-llama/Llama-3.1-405B-Instruct")
 # Mistral (Mistral AI)
 model = outlines.models.transformers("mistralai/Mistral-7B-Instruct-v0.3")
 model = outlines.models.transformers("mistralai/Mixtral-8x7B-Instruct-v0.1")
+```
+
+Continuation:
+
+```python
 model = outlines.models.transformers("mistralai/Mixtral-8x22B-Instruct-v0.1")
 
 # Qwen (Alibaba)
@@ -123,6 +148,11 @@ model = outlines.models.transformers("google/gemma-2-9b-it")
 model = outlines.models.transformers("google/gemma-2-27b-it")
 
 # Llava (Vision)
+```
+
+Continuation:
+
+```python
 model = outlines.models.transformers("llava-hf/llava-v1.6-mistral-7b-hf")
 ```
 
@@ -141,6 +171,11 @@ model_hf = AutoModelForCausalLM.from_pretrained(
 )
 
 # Use with Outlines
+```
+
+Continuation:
+
+```python
 model = outlines.models.transformers(
     model=model_hf,
     tokenizer=tokenizer
@@ -149,7 +184,7 @@ model = outlines.models.transformers(
 
 ## llama.cpp
 
-### Basic Setup
+### Basic Setup (2)
 
 ```python
 import outlines
@@ -160,11 +195,11 @@ model = outlines.models.llamacpp(
     n_ctx=4096  # Context window
 )
 
-# Use with generator
+# Use with generator (2)
 generator = outlines.generate.json(model, YourModel)
 ```
 
-### GPU Configuration
+### GPU Configuration (2)
 
 ```python
 # CPU only
@@ -179,6 +214,11 @@ model = outlines.models.llamacpp(
     "./models/model.gguf",
     n_ctx=4096,
     n_gpu_layers=35,  # Offload 35 layers to GPU
+```
+
+Continuation:
+
+```python
     n_threads=4       # CPU threads for remaining layers
 )
 
@@ -190,7 +230,7 @@ model = outlines.models.llamacpp(
 )
 ```
 
-### Advanced Configuration
+### Advanced Configuration (2)
 
 ```python
 model = outlines.models.llamacpp(
@@ -221,6 +261,11 @@ model = outlines.models.llamacpp("./models/model.Q4_K_M.gguf")
 # - Speed: Slightly slower than Q4
 model = outlines.models.llamacpp("./models/model.Q5_K_M.gguf")
 
+```
+
+Continuation:
+
+```python
 # Q6_K (6-bit, high quality)
 # - Size: ~6.5GB for 7B model
 # - Quality: Excellent
@@ -233,6 +278,11 @@ model = outlines.models.llamacpp("./models/model.Q6_K.gguf")
 # - Speed: Slower than Q6
 model = outlines.models.llamacpp("./models/model.Q8_0.gguf")
 
+```
+
+Continuation:
+
+```python
 # F16 (16-bit float, original quality)
 # - Size: ~14GB for 7B model
 # - Quality: Original
@@ -272,7 +322,7 @@ model = outlines.models.llamacpp(
 
 ## vLLM (Production)
 
-### Basic Setup
+### Basic Setup (3)
 
 ```python
 import outlines
@@ -280,7 +330,7 @@ import outlines
 # Load model with vLLM
 model = outlines.models.vllm("meta-llama/Llama-3.1-8B-Instruct")
 
-# Use with generator
+# Use with generator (3)
 generator = outlines.generate.json(model, YourModel)
 ```
 
@@ -294,7 +344,7 @@ model = outlines.models.vllm(
 )
 ```
 
-### Multi-GPU
+### Multi-GPU (2)
 
 ```python
 # Tensor parallelism (split model across GPUs)
@@ -309,6 +359,11 @@ model = outlines.models.vllm(
     "meta-llama/Llama-3.1-405B-Instruct",
     pipeline_parallel_size=8,  # 8-GPU pipeline
     tensor_parallel_size=4     # 4-GPU tensor split
+```
+
+Continuation:
+
+```python
     # Total: 32 GPUs
 )
 ```
@@ -328,6 +383,11 @@ model = outlines.models.vllm(
     "meta-llama/Llama-3.1-8B-Instruct",
     quantization="gptq"
 )
+```
+
+Continuation:
+
+```python
 
 # SqueezeLLM quantization
 model = outlines.models.vllm(
@@ -336,7 +396,7 @@ model = outlines.models.vllm(
 )
 ```
 
-### Advanced Configuration
+### Advanced Configuration (3)
 
 ```python
 model = outlines.models.vllm(
@@ -372,7 +432,7 @@ results = [generator(p) for p in prompts]
 
 ## OpenAI (Limited Support)
 
-### Basic Setup
+### Basic Setup (4)
 
 ```python
 import outlines
@@ -380,7 +440,7 @@ import outlines
 # Basic OpenAI support
 model = outlines.models.openai("gpt-4o-mini", api_key="your-api-key")
 
-# Use with generator
+# Use with generator (4)
 generator = outlines.generate.json(model, YourModel)
 result = generator("Your prompt")
 ```
@@ -492,6 +552,11 @@ model = outlines.models.transformers(
     "meta-llama/Llama-3.1-8B-Instruct",
     device="cuda",
     model_kwargs={
+```
+
+Continuation:
+
+```python
         "torch_dtype": "float16",
         "use_flash_attention_2": True
     }
@@ -504,6 +569,11 @@ model = outlines.models.transformers(
     model_kwargs={
         "load_in_8bit": True,
         "device_map": "auto"
+```
+
+Continuation:
+
+```python
     }
 )
 ```
@@ -523,6 +593,11 @@ model = outlines.models.llamacpp(
 model = outlines.models.llamacpp(
     "./models/model.Q4_K_M.gguf",
     n_ctx=4096,
+```
+
+Continuation:
+
+```python
     n_threads=8,      # Use all performance cores
     use_mmap=True
 )
@@ -539,10 +614,15 @@ model = outlines.models.vllm(
     enforce_eager=False           # Use CUDA graphs
 )
 
-# Multi-GPU
+# Multi-GPU (3)
 model = outlines.models.vllm(
     "meta-llama/Llama-3.1-70B-Instruct",
     tensor_parallel_size=4,  # 4 GPUs
+```
+
+Continuation:
+
+```python
     gpu_memory_utilization=0.9
 )
 ```
@@ -596,6 +676,11 @@ model = outlines.models.vllm("meta-llama/Llama-3.1-8B-Instruct")
 
 class User(BaseModel):
     name: str
+```
+
+Continuation:
+
+```python
     age: int
     email: str
 

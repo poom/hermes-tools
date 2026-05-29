@@ -28,6 +28,11 @@ model = outlines.models.transformers("microsoft/Phi-3-mini-4k-instruct")
 generator = outlines.generate.json(model, User)
 
 user = generator("Generate user: Alice, 25, alice@example.com")
+```
+
+Continuation:
+
+```python
 print(user.name)   # "Alice"
 print(user.age)    # 25
 print(user.email)  # "alice@example.com"
@@ -50,6 +55,11 @@ class Product(BaseModel):
 model = outlines.models.transformers("microsoft/Phi-3-mini-4k-instruct")
 generator = outlines.generate.json(model, Product)
 
+```
+
+Continuation:
+
+```python
 product = generator("Generate product: iPhone 15, $999")
 # All fields guaranteed to meet constraints
 ```
@@ -76,6 +86,11 @@ class Article(BaseModel):
 generator = outlines.generate.json(model, Article)
 
 # Can generate even if optional fields missing
+```
+
+Continuation:
+
+```python
 article = generator("Title: Introduction to AI")
 print(article.author)  # None (not provided)
 print(article.tags)    # [] (default)
@@ -114,6 +129,11 @@ class Application(BaseModel):
     applicant_name: str
     status: Status  # Must be one of enum values
     submitted_date: str
+```
+
+Continuation:
+
+```python
 
 generator = outlines.generate.json(model, Application)
 app = generator("Generate application for John Doe")
@@ -168,6 +188,11 @@ class Person(BaseModel):
     age: int
     email: str
     address: Address  # Nested model
+```
+
+Continuation:
+
+```python
 
 model = outlines.models.transformers("microsoft/Phi-3-mini-4k-instruct")
 generator = outlines.generate.json(model, Person)
@@ -180,6 +205,11 @@ Email: alice@example.com
 Address: 123 Main St, Boston, MA, 02101
 """
 
+```
+
+Continuation:
+
+```python
 person = generator(prompt)
 print(person.name)  # "Alice Johnson"
 print(person.address.city)  # "Boston"
@@ -201,6 +231,11 @@ class Event(BaseModel):
     title: str
     date: str
     location: Location
+```
+
+Continuation:
+
+```python
 
 generator = outlines.generate.json(model, Event)
 event = generator("Generate event: Tech Conference in San Francisco")
@@ -225,6 +260,11 @@ class Order(BaseModel):
     total: float
 
 generator = outlines.generate.json(model, Order)
+```
+
+Continuation:
+
+```python
 
 prompt = """
 Generate order for John:
@@ -237,6 +277,11 @@ order = generator(prompt)
 print(f"Order ID: {order.order_id}")
 for item in order.items:
     print(f"- {item.quantity}x {item.name} @ ${item.price}")
+```
+
+Continuation:
+
+```python
 print(f"Total: ${order.total}")
 ```
 
@@ -257,6 +302,11 @@ class ImageContent(BaseModel):
     caption: str
 
 class Post(BaseModel):
+```
+
+Continuation:
+
+```python
     title: str
     content: Union[TextContent, ImageContent]  # Either type
 
@@ -334,6 +384,11 @@ schema = {
         "age": {"type": "integer", "minimum": 0, "maximum": 120},
         "email": {"type": "string", "format": "email"}
     },
+```
+
+Continuation:
+
+```python
     "required": ["name", "age", "email"]
 }
 
@@ -359,6 +414,11 @@ print(schema)
 #   "type": "object",
 #   "properties": {
 #     "name": {"type": "string"},
+```
+
+Continuation:
+
+```python
 #     "age": {"type": "integer"},
 #     "email": {"type": "string"}
 #   },
@@ -387,6 +447,11 @@ order1 = generator("Create express order for tomorrow")
 print(order1.express_fee)  # 25.0
 
 # Standard order
+```
+
+Continuation:
+
+```python
 order2 = generator("Create standard order")
 print(order2.express_fee)  # None
 ```
@@ -406,6 +471,11 @@ TreeNode.model_rebuild()
 generator = outlines.generate.json(model, TreeNode)
 tree = generator("Generate file tree with subdirectories")
 
+```
+
+Continuation:
+
+```python
 print(tree.value)  # "root"
 print(tree.children[0].value)  # "subdir1"
 ```
@@ -425,6 +495,11 @@ class DateRange(BaseModel):
         if 'start_date' in info.data:
             from datetime import datetime
             start = datetime.strptime(info.data['start_date'], '%Y-%m-%d')
+```
+
+Continuation:
+
+```python
             end = datetime.strptime(v, '%Y-%m-%d')
             if end < start:
                 raise ValueError('end_date must be after start_date')
@@ -451,6 +526,11 @@ generator = outlines.generate.json(model, Team)
 
 team = generator("Generate engineering team with 5 members")
 print(f"Team: {team.team_name}")
+```
+
+Continuation:
+
+```python
 for member in team.members:
     print(f"- {member.name}, {member.age}")
 ```
@@ -470,6 +550,11 @@ def generate_batch(prompts: list[str], schema: type[BaseModel]):
 
     return results
 
+```
+
+Continuation:
+
+```python
 class Product(BaseModel):
     name: str
     price: float
@@ -482,6 +567,11 @@ prompts = [
 
 products = generate_batch(prompts, Product)
 for product in products:
+```
+
+Continuation:
+
+```python
     print(f"{product.name}: ${product.price}")
 ```
 
@@ -502,6 +592,11 @@ def get_generator(model_name: str, schema_hash: int):
 gen1 = get_generator("microsoft/Phi-3-mini-4k-instruct", hash(User))
 
 # Second call: returns cached generator (fast!)
+```
+
+Continuation:
+
+```python
 gen2 = get_generator("microsoft/Phi-3-mini-4k-instruct", hash(User))
 ```
 

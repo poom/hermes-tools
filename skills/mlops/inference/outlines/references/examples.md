@@ -28,10 +28,15 @@ class PersonInfo(BaseModel):
 
 model = outlines.models.transformers("microsoft/Phi-3-mini-4k-instruct")
 generator = outlines.generate.json(model, PersonInfo)
+```
+
+Continuation:
+
+```python
 
 text = """
 Dr. Sarah Johnson is a 42-year-old research scientist at MIT.
-She can be reached at sarah.j@mit.edu and currently lives in Cambridge, MA.
+She can be reached at sarah.j@example.com and currently lives in Cambridge, MA.
 """
 
 prompt = f"Extract person information from:\n{text}\n\nPerson:"
@@ -40,6 +45,11 @@ person = generator(prompt)
 print(f"Name: {person.name}")
 print(f"Age: {person.age}")
 print(f"Occupation: {person.occupation}")
+```
+
+Continuation:
+
+```python
 print(f"Email: {person.email}")
 print(f"Location: {person.location}")
 ```
@@ -59,6 +69,11 @@ model = outlines.models.transformers("meta-llama/Llama-3.1-8B-Instruct")
 generator = outlines.generate.json(model, CompanyInfo)
 
 text = """
+```
+
+Continuation:
+
+```python
 Tesla, Inc. was founded in 2003 and operates primarily in the automotive
 and energy industries. The company is headquartered in Austin, Texas,
 and employs approximately 140,000 people worldwide.
@@ -88,6 +103,11 @@ class ProductSpec(BaseModel):
 generator = outlines.generate.json(model, ProductSpec)
 
 text = """
+```
+
+Continuation:
+
+```python
 The Apple iPhone 15 Pro is priced at $999. It measures 146.6 x 70.6 x 8.25 mm
 and weighs 187 grams. Key features include the A17 Pro chip, titanium design,
 action button, and USB-C port. It has an average customer rating of 4.5 stars.
@@ -117,6 +137,11 @@ class Sentiment(str, Enum):
 
 class SentimentAnalysis(BaseModel):
     text: str
+```
+
+Continuation:
+
+```python
     sentiment: Sentiment
     confidence: float = Field(ge=0.0, le=1.0)
     aspects: list[str]  # What aspects were mentioned
@@ -129,6 +154,11 @@ review = """
 This product completely exceeded my expectations! The build quality is
 outstanding, and customer service was incredibly helpful. My only minor
 complaint is the packaging could be better.
+```
+
+Continuation:
+
+```python
 """
 
 result = generator(f"Analyze sentiment:\n{review}\n\nAnalysis:")
@@ -154,6 +184,11 @@ class Category(str, Enum):
 class ArticleClassification(BaseModel):
     primary_category: Category
     secondary_categories: list[Category]
+```
+
+Continuation:
+
+```python
     keywords: list[str] = Field(min_items=3, max_items=10)
     target_audience: Literal["general", "expert", "beginner"]
     reading_level: Literal["elementary", "intermediate", "advanced"]
@@ -166,6 +201,11 @@ release of iOS 18. The new features leverage machine learning to significantly
 improve battery life and overall device performance. Industry analysts predict
 this will strengthen Apple's position in the competitive smartphone market.
 """
+```
+
+Continuation:
+
+```python
 
 classification = generator(f"Classify article:\n{article}\n\nClassification:")
 
@@ -190,6 +230,11 @@ class UserMessage(BaseModel):
     original_message: str
     intent: Intent
     urgency: Literal["low", "medium", "high", "critical"]
+```
+
+Continuation:
+
+```python
     department: Literal["support", "sales", "billing", "technical"]
     sentiment: Literal["positive", "neutral", "negative"]
     action_required: bool
@@ -202,6 +247,11 @@ I've been charged twice for my subscription this month! This is the third
 time this has happened. I need someone to fix this immediately and refund
 the extra charge. Very disappointed with this service.
 """
+```
+
+Continuation:
+
+```python
 
 result = generator(f"Analyze message:\n{message}\n\nAnalysis:")
 
@@ -229,6 +279,11 @@ class Experience(BaseModel):
     duration: str
     responsibilities: list[str]
 
+```
+
+Continuation:
+
+```python
 class JobApplication(BaseModel):
     full_name: str
     email: str
@@ -241,9 +296,14 @@ class JobApplication(BaseModel):
 model = outlines.models.transformers("meta-llama/Llama-3.1-8B-Instruct")
 generator = outlines.generate.json(model, JobApplication)
 
+```
+
+Continuation:
+
+```python
 resume_text = """
 John Smith
-Email: john.smith@email.com | Phone: 555-0123
+Email: john.smith@example.com | Phone: 555-0123
 
 EDUCATION
 - BS in Computer Science, MIT, 2018
@@ -253,6 +313,11 @@ EXPERIENCE
 Software Engineer, Google (2020-2023)
 - Developed ML pipelines for search ranking
 - Led team of 5 engineers
+```
+
+Continuation:
+
+```python
 - Improved search quality by 15%
 
 SKILLS: Python, Machine Learning, TensorFlow, System Design
@@ -265,6 +330,11 @@ application = generator(f"Extract job application:\n{resume_text}\n\nApplication
 print(f"Applicant: {application.full_name}")
 print(f"Email: {application.email}")
 print(f"Education: {len(application.education)} degrees")
+```
+
+Continuation:
+
+```python
 for edu in application.education:
     print(f"  - {edu.degree} in {edu.field}, {edu.institution} ({edu.year})")
 print(f"Experience: {len(application.experience)} positions")
@@ -285,6 +355,11 @@ class Invoice(BaseModel):
     vendor: str
     customer: str
     items: list[InvoiceItem]
+```
+
+Continuation:
+
+```python
     subtotal: float = Field(gt=0)
     tax: float = Field(ge=0)
     total: float = Field(gt=0)
@@ -297,6 +372,11 @@ Date: 2024-01-15
 
 From: Acme Corp
 To: Smith & Co
+```
+
+Continuation:
+
+```python
 
 Items:
 - Widget A: 10 units @ $50.00 = $500.00
@@ -309,6 +389,11 @@ TOTAL: $1,053.00
 """
 
 invoice = generator(f"Extract invoice:\n{invoice_text}\n\nInvoice:")
+```
+
+Continuation:
+
+```python
 
 print(f"Invoice: {invoice.invoice_number}")
 print(f"From: {invoice.vendor} → To: {invoice.customer}")
@@ -333,6 +418,11 @@ class SurveyResponse(BaseModel):
 generator = outlines.generate.json(model, SurveyResponse)
 
 survey_text = """
+```
+
+Continuation:
+
+```python
 Survey ID: RESP-12345
 Completed: 2024-01-20
 
@@ -345,6 +435,11 @@ What features do you like most?
 - Easy to use
 - Great customer support
 
+```
+
+Continuation:
+
+```python
 What could we improve?
 - Better documentation
 - More integrations
@@ -357,6 +452,11 @@ response = generator(f"Extract survey response:\n{survey_text}\n\nResponse:")
 print(f"Respondent: {response.respondent_id}")
 print(f"Satisfaction: {response.satisfaction}/5")
 print(f"Would recommend: {response.would_recommend}")
+```
+
+Continuation:
+
+```python
 print(f"Favorite features: {response.favorite_features}")
 print(f"Improvement areas: {response.improvement_areas}")
 ```
@@ -378,6 +478,11 @@ class Organization(BaseModel):
 class Location(BaseModel):
     name: str
     type: Literal["city", "state", "country", "region"]
+```
+
+Continuation:
+
+```python
 
 class Event(BaseModel):
     name: str
@@ -390,6 +495,11 @@ class ArticleEntities(BaseModel):
     locations: list[Location]
     events: list[Event]
     dates: list[str]
+```
+
+Continuation:
+
+```python
 
 model = outlines.models.transformers("meta-llama/Llama-3.1-8B-Instruct")
 generator = outlines.generate.json(model, ArticleEntities)
@@ -402,6 +512,11 @@ from both companies and focused on AI integration strategies. Apple's
 Cupertino offices will host a follow-up meeting on October 20, 2024.
 """
 
+```
+
+Continuation:
+
+```python
 entities = generator(f"Extract all entities:\n{article}\n\nEntities:")
 
 print("People:")
@@ -414,6 +529,11 @@ for org in entities.organizations:
 
 print("\nLocations:")
 for loc in entities.locations:
+```
+
+Continuation:
+
+```python
     print(f"  - {loc.name} ({loc.type})")
 
 print("\nEvents:")
@@ -436,6 +556,11 @@ class Reference(BaseModel):
     source: str
 
 class DocumentMetadata(BaseModel):
+```
+
+Continuation:
+
+```python
     title: str
     authors: list[Author]
     abstract: str
@@ -448,11 +573,16 @@ class DocumentMetadata(BaseModel):
 generator = outlines.generate.json(model, DocumentMetadata)
 
 paper = """
+```
+
+Continuation:
+
+```python
 Title: Advances in Neural Machine Translation
 
 Authors:
-- Dr. Jane Smith (jane@university.edu), MIT
-- Prof. John Doe (jdoe@stanford.edu), Stanford University
+- Dr. Jane Smith (jane@example.com), MIT
+- Prof. John Doe (jdoe@example.com), Stanford University
 
 Abstract: This paper presents novel approaches to neural machine translation
 using transformer architectures. We demonstrate significant improvements in
@@ -460,6 +590,11 @@ translation quality across multiple language pairs.
 
 Keywords: Neural Networks, Machine Translation, Transformers, NLP
 
+```
+
+Continuation:
+
+```python
 Published: Journal of AI Research, 2024-03-15
 DOI: 10.1234/jair.2024.001
 
@@ -472,6 +607,11 @@ metadata = generator(f"Extract document metadata:\n{paper}\n\nMetadata:")
 
 print(f"Title: {metadata.title}")
 print(f"Authors: {', '.join(a.name for a in metadata.authors)}")
+```
+
+Continuation:
+
+```python
 print(f"Keywords: {', '.join(metadata.keywords)}")
 print(f"References: {len(metadata.references)}")
 ```
@@ -493,6 +633,11 @@ class PythonFunction(BaseModel):
     docstring: str
     body: list[str]  # Lines of code
 
+```
+
+Continuation:
+
+```python
 model = outlines.models.transformers("microsoft/Phi-3-mini-4k-instruct")
 generator = outlines.generate.json(model, PythonFunction)
 
@@ -505,6 +650,11 @@ print(", ".join(f"{p.name}: {p.type_hint}" for p in func.parameters), end="")
 print(f") -> {func.return_type}:")
 print(f'    """{func.docstring}"""')
 for line in func.body:
+```
+
+Continuation:
+
+```python
     print(f"    {line}")
 ```
 
@@ -523,6 +673,11 @@ class SQLQuery(BaseModel):
 
 generator = outlines.generate.json(model, SQLQuery)
 
+```
+
+Continuation:
+
+```python
 request = "Get top 10 users who made purchases in the last 30 days, ordered by total spent"
 
 sql = generator(f"Generate SQL query:\n{request}\n\nQuery:")
@@ -535,6 +690,11 @@ if sql.joins:
         print(f"  {join}")
 if sql.where_conditions:
     print(f"WHERE {' AND '.join(sql.where_conditions)}")
+```
+
+Continuation:
+
+```python
 if sql.order_by:
     print(f"ORDER BY {', '.join(sql.order_by)}")
 if sql.limit:
@@ -556,6 +716,11 @@ class APIEndpoint(BaseModel):
     description: str
     parameters: list[Parameter]
     request_body: Optional[dict] = None
+```
+
+Continuation:
+
+```python
     response_schema: dict
     status_codes: dict[int, str]
 
@@ -568,6 +733,11 @@ endpoint = generator(f"Generate API endpoint:\n{spec}\n\nEndpoint:")
 print(f"{endpoint.method} {endpoint.path}")
 print(f"Description: {endpoint.description}")
 print("\nParameters:")
+```
+
+Continuation:
+
+```python
 for param in endpoint.parameters:
     req = "required" if param.required else "optional"
     print(f"  - {param.name} ({param.type}, {req}): {param.description}")
@@ -590,6 +760,11 @@ def batch_extract(texts: list[str], schema: type[BaseModel], model_name: str):
         results.append(result)
 
     return results
+```
+
+Continuation:
+
+```python
 
 class Product(BaseModel):
     name: str
@@ -602,6 +777,11 @@ texts = [
     "Coffee Maker priced at $49.99 in Home & Kitchen"
 ]
 
+```
+
+Continuation:
+
+```python
 products = batch_extract(texts, Product, "microsoft/Phi-3-mini-4k-instruct")
 
 for product in products:
@@ -623,6 +803,11 @@ def process_csv(csv_file: str, schema: type[BaseModel]):
         reader = csv.DictReader(f)
         for row in reader:
             text = " | ".join(f"{k}: {v}" for k, v in row.items())
+```
+
+Continuation:
+
+```python
             result = generator(f"Extract:\n{text}\n\nData:")
             results.append(result)
 
@@ -654,6 +839,11 @@ def safe_extract(text: str, schema: type[BaseModel], retries: int = 3):
             result = generator(f"Extract:\n{text}\n\nData:")
             return result
         except ValidationError as e:
+```
+
+Continuation:
+
+```python
             print(f"Attempt {attempt + 1} failed: {e}")
             if attempt == retries - 1:
                 raise
@@ -680,6 +870,11 @@ def cached_extract(text_hash: str, schema_name: str):
 def extract_with_cache(text: str, schema: type[BaseModel]):
     """Extract with caching."""
     text_hash = hashlib.md5(text.encode()).hexdigest()
+```
+
+Continuation:
+
+```python
     schema_name = schema.__name__
 
     cached_result = cached_extract(text_hash, schema_name)
@@ -709,6 +904,11 @@ def monitored_extract(text: str, schema: type[BaseModel]):
 
     try:
         model = outlines.models.transformers("microsoft/Phi-3-mini-4k-instruct")
+```
+
+Continuation:
+
+```python
         generator = outlines.generate.json(model, schema)
 
         result = generator(f"Extract:\n{text}\n\nData:")
@@ -721,6 +921,11 @@ def monitored_extract(text: str, schema: type[BaseModel]):
 
     except Exception as e:
         elapsed = time.time() - start_time
+```
+
+Continuation:
+
+```python
         logger.error(f"Extraction failed after {elapsed:.2f}s: {e}")
         raise
 ```
@@ -740,6 +945,11 @@ class RateLimiter:
 
     def wait_if_needed(self):
         with self.lock:
+```
+
+Continuation:
+
+```python
             now = time.time()
             # Remove old requests
             self.requests = [r for r in self.requests if now - r < self.time_window]
@@ -752,6 +962,11 @@ class RateLimiter:
             self.requests.append(now)
 
 def rate_limited_extract(texts: list[str], schema: type[BaseModel]):
+```
+
+Continuation:
+
+```python
     """Extract with rate limiting."""
     limiter = RateLimiter(max_requests=10, time_window=60)  # 10 req/min
     model = outlines.models.transformers("microsoft/Phi-3-mini-4k-instruct")
