@@ -26,7 +26,7 @@ If the counts differ, explain the reason before mutating. Example: “14 non-bun
 
 ## Example classification from one run
 
-The user asked about `~/Projects/hermes-config/skills`, but that path did not exist. The actual repo was `~/hermes-config`, remote `git@github.com:poom/hermes-config.git`.
+The user asked about `<home>/Projects/hermes-config/skills`, but that path did not exist. The actual repo was `<home>/hermes-config`, remote `git@example.com:poom/hermes-config.git`.
 
 Strong custom candidates found in the repo:
 
@@ -55,7 +55,7 @@ Patched upstream/bundled skills were reported separately and were not recommende
 When the user asks why local skills exist or whether they installed them before, explain:
 
 1. `$HERMES_HOME/skills` is the active library Hermes loads from.
-2. A git config repo such as `~/hermes-config/skills` is usually a backup/source-of-truth candidate.
+2. A git config repo such as `<home>/hermes-config/skills` is usually a backup/source-of-truth candidate.
 3. Skills may have appeared in active local storage because they were bundled, installed from the hub, created by the agent, copied from another repo, or symlinked from a source repo.
 4. To infer origin, inspect:
    - `.hub/lock.json` and `.hub/audit.log` for explicit `INSTALL`/`UNINSTALL` records.
@@ -67,7 +67,7 @@ When the user asks why local skills exist or whether they installed them before,
 Example concise answer:
 
 ```text
-Yes, most likely they existed before today. Hermes loads active skills from ~/.hermes/skills. Your hermes-config repo later backed up those active folders. Today we replaced selected active folders with symlinks to the repo, and moved the old active folders to ~/.hermes/skill-backups/... so nothing was lost.
+Yes, most likely they existed before today. Hermes loads active skills from <home>/.hermes/skills. Your hermes-config repo later backed up those active folders. Today we replaced selected active folders with symlinks to the repo, and moved the old active folders to <home>/.hermes/skill-backups/... so nothing was lost.
 ```
 
 ## Backup and mutation reporting pattern
@@ -75,7 +75,7 @@ Yes, most likely they existed before today. Hermes loads active skills from ~/.h
 When applying symlinks, keep backups outside the active skills tree so Hermes does not discover duplicate backup skills:
 
 ```text
-~/.hermes/skill-backups/symlink-YYYYMMDD-HHMMSS/
+<home>/.hermes/skill-backups/symlink-YYYYMMDD-HHMMSS/
 ```
 
 Report exactly:
@@ -103,6 +103,11 @@ def parse_name(md: Path):
     text = md.read_text(errors="ignore")
     if text.startswith("---"):
         parts = text.split("---", 2)
+```
+
+Continuation:
+
+```python
         if len(parts) >= 3:
             return (yaml.safe_load(parts[1]) or {}).get("name")
     return None
@@ -115,6 +120,11 @@ def collect(root: Path):
         by_name[parse_name(md) or md.parent.name] = md.parent.relative_to(root)
     # Explicitly include symlink directories that rglob may skip.
     for p in list(root.glob("*")) + list(root.glob("*/*")):
+```
+
+Continuation:
+
+```python
         if p.is_symlink() and (p / "SKILL.md").exists():
             by_name[parse_name(p / "SKILL.md") or p.name] = p.relative_to(root)
     return by_name
@@ -127,6 +137,11 @@ source_all = {**source_core, **source_optional}
 
 custom = sorted(set(repo) - set(source_all))
 for name in custom:
+```
+
+Continuation:
+
+```python
     active_path = active_skills / active.get(name, "") if name in active else None
     state = "missing active"
     if active_path and active_path.exists():

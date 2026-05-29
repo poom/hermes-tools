@@ -25,7 +25,7 @@ Use this when moving Hermes config backup from an old git-backed config repo to 
    - Do not delete or mutate the old repo target.
 4. Patch backup script constants.
    - Destination: new checkout path, e.g. `$HOME/Projects/hermes-config-r7840hs`.
-   - Remote: new private repo, e.g. `git@github.com:poom/hermes-config-r7840hs.git`.
+   - Remote: new private repo, e.g. `git@example.com:poom/hermes-config-r7840hs.git`.
    - Repo label used in output should match the new repo.
    - Keep `.env`, auth files, state DBs, sessions, logs, caches, worktrees, cron output, skill hub/cache metadata ignored.
 5. Run backup script.
@@ -60,6 +60,11 @@ Files/folders:
 
 Symlinks:
 - Converted <n> active skill symlinks into real copied skill folders.
+```
+
+Continuation:
+
+```text
 - Active skill symlinks now: 0
 - Backup repo symlinks now: 0
 - Symlink metadata backup: <path>
@@ -72,5 +77,10 @@ Daily backup:
 Safety:
 - Secrets scan: passed
 - Redacted/sanitized: ...
+```
+
+Continuation:
+
+```text
 - Removed: ...
 ```

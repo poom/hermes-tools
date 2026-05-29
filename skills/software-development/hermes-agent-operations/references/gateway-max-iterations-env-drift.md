@@ -8,7 +8,7 @@ Discord long-running status in channel `1506953946894434304` showed:
 Still working... (6 min elapsed — iteration 21/60, receiving stream response)
 ```
 
-The user expected `300` because `~/.hermes/config.yaml` had:
+The user expected `300` because `<home>/.hermes/config.yaml` had:
 
 ```yaml
 agent:
@@ -27,7 +27,7 @@ delegation:
 Agent budget: max_iterations=300 (agent.max_turns from config.yaml, or HERMES_MAX_ITERATIONS from .env, or default 90)
 ```
 
-- `~/.hermes/.env` still contained:
+- `<home>/.hermes/.env` still contained:
 
 ```text
 HERMES_MAX_ITERATIONS=60
@@ -54,7 +54,7 @@ This can coexist with a correct startup budget log if startup config bridging is
 
 ## Workaround
 
-1. Remove or update `HERMES_MAX_ITERATIONS=60` in `~/.hermes/.env`.
+1. Remove or update `HERMES_MAX_ITERATIONS=60` in `<home>/.hermes/.env`.
 2. Restart the gateway.
 3. Verify the next live turn uses the intended cap.
 
