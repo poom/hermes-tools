@@ -18,7 +18,7 @@ openclaw skills info <skill-name> --json
 OpenClaw workspace skills were found under:
 
 ```text
-~/.openclaw/workspace/skills/<skill-name>/SKILL.md
+<home>/.openclaw/workspace/skills/<skill-name>/SKILL.md
 ```
 
 Use `openclaw skills list --json` and filter for `source == "openclaw-workspace"` to identify custom/user workspace skills. Bundled skills are usually `source == "openclaw-bundled"`; extra registry skills may be `openclaw-extra`.
