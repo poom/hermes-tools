@@ -50,6 +50,11 @@ uvx --with pytest --with requests pytest \
   tests/test_atlas_scout_job_posting_intro_run.py \
   tests/test_atlas_scout_report_chat_body_validation.py \
   tests/test_atlas_scout_report_validation.py \
+```
+
+Continuation:
+
+```bash
   tests/test_atlas_scout_ta_refresh_banner_render.py \
   tests/test_atlas_scout_ta_refresh_render.py \
   tests/test_atlas_scout_ta_refresh_run.py \
@@ -62,6 +67,11 @@ uvx --with pytest --with requests pytest \
 
 python3 -m compileall -q atlas-scout-reports tests/test_atlas_scout_*.py tests/test_claude_bq_mcp_bigquery_tools.py
 
+```
+
+Continuation:
+
+```bash
 python3 atlas-scout-reports/job_posting_intro/report_job_posting_intro_run.py --help >/tmp/job-help.txt
 python3 atlas-scout-reports/ta_refresh/report_ta_refresh_run.py --help >/tmp/refresh-help.txt
 python3 atlas-scout-reports/ta_sla_snapshot/report_ta_sla_snapshot_run.py --help >/tmp/sla-help.txt

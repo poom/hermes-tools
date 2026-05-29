@@ -31,6 +31,11 @@ required = ['AGENTS.repo.md', 'AGENTS.terraform.md', 'AGENTS.<profile>.md', 'AGE
 missing = [s for s in required if s not in readme]
 if missing:
     raise SystemExit(f'README missing expected terms: {missing}')
+```
+
+Continuation:
+
+```bash
 print('agent-doc consistency checks passed')
 PY
 ```

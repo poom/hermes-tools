@@ -43,6 +43,11 @@ validate() {
   fi
   gh api graphql \
     -f query='query($owner:String!, $repo:String!, $qualifiedName:String!) { repository(owner:$owner, name:$repo) { ref(qualifiedName:$qualifiedName) { name } } }' \
+```
+
+Continuation:
+
+```bash
     -F owner='OWNER' -F repo='REPO' -F qualifiedName="$expected_ref" \
     --jq '.data.repository.ref.name // empty'
 }

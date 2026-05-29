@@ -38,6 +38,11 @@ gh api graphql -f query='query($owner:String!,$repo:String!,$number:Int!){reposi
 # Local YAML syntax fallback
 ruby -e 'require "yaml"; ARGV.each { |f| YAML.load_file(f); puts "ok #{f}" }' path/to/manifest.yaml
 
+```
+
+Continuation:
+
+```bash
 # Verify app artifacts at exact tags; URL-encode tags containing @ or /
 gh api 'repos/OWNER/APP_REPO/contents/path/to/artifact?ref=%40scope%2Fpackage%401.21.0' --jq '{path,sha,size}'
 ```

@@ -9,10 +9,10 @@ A Digger/Terraform plan for imported `googleworkspace_group` resources shows ent
 ```hcl
 ~ resource "googleworkspace_group" "group" {
   ~ aliases = [
-      + "access-matrix@finn-app.com",
+      + "access-matrix@example.com",
     ]
-  + description = "Imported existing Google Workspace group for access-matrix@ewa-services.com"
-  email = "access-matrix@ewa-services.com"
+  + description = "Imported existing Google Workspace group for access-matrix@example.com"
+  email = "access-matrix@example.com"
   name  = "Access Matrix"
 }
 ```

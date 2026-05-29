@@ -9,7 +9,7 @@ A workflow claims: "agent edits/commits locally; wrapper verifies clean tree and
 Red flags:
 
 - `actions/checkout` uses a write token before the AI step and omits `persist-credentials: false`.
-- The AI/LLM execution step receives `GH_TOKEN`, `GITHUB_TOKEN`, PATs, app tokens, provider auth files such as `CODEX_AUTH_JSON`/`~/.codex/auth.json`, or remote credentials with contents-write/read scope.
+- The AI/LLM execution step receives `GH_TOKEN`, `GITHUB_TOKEN`, PATs, app tokens, provider auth files such as `CODEX_AUTH_JSON`/`<home>/.codex/auth.json`, or remote credentials with contents-write/read scope.
 - The AI step has unrestricted shell / sandbox bypass / broad tool permissions (for example `codex exec --dangerously-bypass-approvals-and-sandbox`) while reading attacker-controlled PR text/diff as prompt context.
 - A workflow says the prompt contains all necessary context and no repo/network access is needed, but the CLI invocation does not enforce no-shell/no-network/no-filesystem access.
 - The wrapper verifies only `git status --porcelain` and `HEAD != BASELINE_SHA` before pushing.

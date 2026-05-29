@@ -15,11 +15,11 @@ Use for `EWA-Services/google-workspace` import/onboarding PR re-reviews when ear
    - Record the plan summary (`N to import, N to add, N to change, 0 to destroy`) and inspect relevant resource snippets from the log rather than relying only on PR comments.
 
 3. **Differentiate real removals from Terraform ordering churn**
-   - Terraform list diffs can show the same alias as both removed and added when ordering changes. For example a snippet with `- sales-sa@finn-app.com` and `+ sales-sa@finn-app.com` is not, by itself, a real alias loss.
+   - Terraform list diffs can show the same alias as both removed and added when ordering changes. For example a snippet with `- sales-sa@example.com` and `+ sales-sa@example.com` is not, by itself, a real alias loss.
    - For a prior alias-removal blocker, confirm the source now models the alias and the current plan still retains/adds it.
    - Known prior blocker examples:
      - `users_data.tf` for `david.b` should preserve aliases such as `webmaster`, `dataprotection`, and `vlad.s` as `additional_email_aliases`; the user module expands them to both ewa-services.com and finn-app.com aliases unless disabled.
-     - `group_imported_sales` should model `sales-id` and `sales-sa` aliases as well as the intended `sales@finn-app.com` alias.
+     - `group_imported_sales` should model `sales-id` and `sales-sa` aliases as well as the intended `sales@example.com` alias.
 
 4. **Check settings drift as well as aliases**
    - Old blockers may include behavior-affecting group settings such as `enable_collaborative_inbox`, `is_archived`, `reply_to`, and `who_can_assist_content`.

@@ -41,6 +41,11 @@ dq = DataQualityReport()
 matrix, _ = data.build_source_tracking_matrix(
     {"weeks": [{"label": "18 May-24 May", "start": "2026-05-18", "end": "2026-05-24"}],
      "rows": [{"week": "18 May-24 May", "position": "Finance Manager", "greenhouse_job_id": "4420701101", "source": "LinkedIn", "count": 1}]},
+```
+
+Continuation:
+
+```bash
     {"rows": []},
     roles=roles,
     dq=dq,

@@ -57,5 +57,10 @@ gh api "repos/OWNER/REPO/commits/$HEAD/check-runs?per_page=100" \
   --jq '.check_runs[] | select(.name=="REQUIRED CHECK NAME") | {name,status,conclusion,html_url,completed_at}'
 
 # Base policy `has_status` contract
+```
+
+Continuation:
+
+```bash
 gh api repos/OWNER/REPO/contents/.policy.yml?ref=BASE --jq .content | base64 -d | grep -n -A12 -B4 has_status
 ```

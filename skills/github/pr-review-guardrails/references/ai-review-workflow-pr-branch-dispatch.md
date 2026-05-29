@@ -23,6 +23,11 @@ gh workflow run code-review.yaml \
   -f file_path='' \
   -f line_number='' \
   -f codex_version=0.130.0 \
+```
+
+Continuation:
+
+```bash
   -f codex_model=gpt-5.5 \
   -f codex_reasoning_effort=xhigh
 ```

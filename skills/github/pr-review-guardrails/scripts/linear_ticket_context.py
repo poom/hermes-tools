@@ -18,7 +18,7 @@ from typing import Any
 
 
 def load_dotenv() -> None:
-    """Load ~/.hermes/.env-style variables if they are not already present."""
+    """Load <home>/.hermes/.env-style variables if they are not already present."""
     hermes_home = pathlib.Path(os.environ.get("HERMES_HOME", pathlib.Path.home() / ".hermes"))
     env_path = hermes_home / ".env"
     if not env_path.exists():

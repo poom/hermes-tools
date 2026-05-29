@@ -25,6 +25,11 @@ gh api graphql \
     repository(owner:$owner,name:$repo){
       pullRequest(number:$number){
         reviewThreads(first:100){
+```
+
+Continuation:
+
+```bash
           nodes{
             isResolved
             comments(first:20){
@@ -37,6 +42,11 @@ gh api graphql \
                 createdAt
                 outdated
               }
+```
+
+Continuation:
+
+```bash
             }
           }
         }
@@ -49,6 +59,11 @@ import json
 p='/tmp/pr-reviewthreads.json'
 data=json.load(open(p))
 threads=data['data']['repository']['pullRequest']['reviewThreads']['nodes']
+```
+
+Continuation:
+
+```bash
 print('threads', len(threads), 'unresolved', sum(not t['isResolved'] for t in threads))
 for i,t in enumerate(threads, 1):
     if not t['isResolved']:

@@ -12,7 +12,7 @@ Concrete session patterns:
 
 1. Refresh live PR state and formal reviews with the pulls reviews API.
    - Do not rely on `reviewDecision == APPROVED` alone; verify whether `poom` has an `APPROVED` review whose `commit_id` equals `headRefOid`.
-2. Read `${HERMES_HOME:-~/.hermes}/pr-reviews/<repo>-<number>.md`.
+2. Read `${HERMES_HOME:-<home>/.hermes}/pr-reviews/<repo>-<number>.md`.
    - If memory proves a full previous guardrail review but for an older head, use it as a base only after validating the old reviewed SHA.
 3. Inspect the delta from previous reviewed SHA to current head:
    - `git diff --stat OLD_HEAD..HEAD`

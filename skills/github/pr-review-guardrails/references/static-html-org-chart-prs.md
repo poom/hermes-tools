@@ -40,6 +40,11 @@ for m in re.finditer(r'^\s*\{ id: "(?P<id>[^"]+)"(?P<body>.*)\},\s*$', text, re.
         return mm.group(1) if mm else None
     entries.append({k: (m.group('id') if k=='id' else val(k)) for k in ['id','pid','name','role','dept','email','level']})
 ids=[e['id'] for e in entries]
+```
+
+Continuation:
+
+```bash
 emails=[e['email'] for e in entries if e['email']]
 errors=[]
 if len(ids)!=len(set(ids)): errors.append('duplicate ids')
@@ -52,6 +57,11 @@ buttons=[x for x in re.findall(r"filterDept\('([^']+)'\)", text) if x!='all']
 depts=sorted(set(e['dept'] for e in entries))
 for b in buttons:
     if b not in depts: errors.append(f'button dept missing from data: {b}')
+```
+
+Continuation:
+
+```bash
 for d in depts:
     if d!='Executive' and d not in buttons: errors.append(f'dept lacks button: {d}')
 print(json.dumps({'roots':roots,'nodes':len(entries),'emails':len(set(emails)),'peopleCount':len(set(emails))+1,'depts':depts,'buttons':buttons,'errors':errors}, indent=2))
