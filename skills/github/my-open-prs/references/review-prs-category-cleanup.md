@@ -6,7 +6,7 @@ Use this when the user says the `review-prs` Discord category has too many PR ch
 
 There are two different cleanup patterns:
 
-- **Discord threads under a parent channel**: scripts like `~/.hermes/scripts/discord_pr_thread_closer.py` call `/guilds/<guild>/threads/active` and archive threads. They do not see or delete normal text channels under a category.
+- **Discord threads under a parent channel**: scripts like `<home>/.hermes/scripts/discord_pr_thread_closer.py` call `/guilds/<guild>/threads/active` and archive threads. They do not see or delete normal text channels under a category.
 - **Normal text channels under a Discord category**: current PR review routing uses one normal text channel per PR under categories like `review-prs`, `pr-waiting-for-approval`, `pr-need-actions`, and `pr-waiting-for-checks`. These must be enumerated from `/guilds/<guild_id>/channels` and filtered by `parent_id`.
 
 If the user reports “a lot of channels,” first check whether the active cron job is a **thread** closer. If so, it can be healthy and still leave stale text channels behind.

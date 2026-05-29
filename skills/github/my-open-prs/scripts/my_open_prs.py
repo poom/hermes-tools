@@ -4,7 +4,7 @@
 The script has two modes:
 
 - default Markdown report: grouped open PR queue, compatible with the original skill
-- --actions-json: update ~/.hermes/my-open-prs/*.md and emit Discord post actions
+- --actions-json: update <home>/.hermes/my-open-prs/*.md and emit Discord post actions
   for new PR topics, changed blockers/statuses, stale/no-activity pings, and closed/merged PRs
 """
 

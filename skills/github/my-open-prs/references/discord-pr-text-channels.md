@@ -11,13 +11,13 @@ Threads in the parent status channel (`<#1505939375983427796>`) make the channel
 - Treat `1505939375983427796` as the stable source/parent status channel.
 - Create each PR channel in the same guild/category as that source channel.
 - Use deterministic names: `<repo>-pr-<number>` (lowercase, Discord-safe, e.g. `finn-web-app-pr-4970`).
-- Store the returned `channel_id` in the per-PR Markdown status record under `~/.hermes/my-open-prs`.
+- Store the returned `channel_id` in the per-PR Markdown status record under `<home>/.hermes/my-open-prs`.
 - Send subsequent blocker/status updates to `discord:<channel_id>`.
 - When a PR is merged/closed, post the final merged/closed notice to the parent status channel, delete the PR text channel, then mark the closed action posted.
 
 ## Tooling notes
 
-Hermes' built-in Discord tool had thread support but not normal channel create/delete. The skill therefore uses `scripts/discord_pr_channels.py`, which talks to Discord REST with `DISCORD_BOT_TOKEN` from the environment or `~/.hermes/.env`.
+Hermes' built-in Discord tool had thread support but not normal channel create/delete. The skill therefore uses `scripts/discord_pr_channels.py`, which talks to Discord REST with `DISCORD_BOT_TOKEN` from the environment or `<home>/.hermes/.env`.
 
 Safety checks in the helper:
 
