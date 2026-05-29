@@ -59,6 +59,11 @@ tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B")
 dataset = load_dataset("trl-lib/Capybara", split="train")
 
 # Configure
+```
+
+Continuation:
+
+```python
 config = SFTConfig(
     output_dir="Qwen2.5-SFT",
     per_device_train_batch_size=4,
@@ -71,6 +76,11 @@ config = SFTConfig(
 trainer = SFTTrainer(
     model=model,
     args=config,
+```
+
+Continuation:
+
+```python
     train_dataset=dataset,
     tokenizer=tokenizer
 )
@@ -147,6 +157,11 @@ lora_config = LoraConfig(
 
 trainer = SFTTrainer(
     model=model,
+```
+
+Continuation:
+
+```python
     args=config,
     train_dataset=dataset,
     peft_config=lora_config  # Add LoRA

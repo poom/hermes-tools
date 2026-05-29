@@ -36,7 +36,7 @@ python -m trl.scripts.ppo \
 
 Memory-efficient online RL.
 
-### Basic Usage
+### Basic Usage (2)
 
 ```python
 from trl import GRPOTrainer, GRPOConfig
@@ -51,6 +51,11 @@ config = GRPOConfig(
     num_generations=4,  # Completions per prompt
     max_new_tokens=128
 )
+```
+
+Continuation:
+
+```python
 
 trainer = GRPOTrainer(
     model="Qwen/Qwen2-0.5B-Instruct",
@@ -61,7 +66,7 @@ trainer = GRPOTrainer(
 trainer.train()
 ```
 
-### Key Parameters
+### Key Parameters (2)
 
 - `num_generations`: 2-8 completions
 - `max_new_tokens`: 64-256

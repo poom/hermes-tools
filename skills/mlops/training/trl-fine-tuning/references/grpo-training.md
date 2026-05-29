@@ -78,6 +78,11 @@ Respond in the following format:
 </answer>
 """
 
+```
+
+Continuation:
+
+```python
 def prepare_dataset(raw_data):
     """Transform raw data into GRPO-compatible format.
 
@@ -90,6 +95,11 @@ def prepare_dataset(raw_data):
             {'role': 'system', 'content': SYSTEM_PROMPT},
             {'role': 'user', 'content': x['question']}
         ],
+```
+
+Continuation:
+
+```python
         'answer': extract_answer(x['raw_answer'])
     })
 ```
@@ -115,6 +125,11 @@ def reward_function_name(
     for response in responses:
         score = compute_score(response)
         rewards.append(score)
+```
+
+Continuation:
+
+```python
     return rewards
 ```
 
@@ -154,6 +169,11 @@ def incremental_format_reward(completions, **kwargs):
         if '<answer>' in r:     score += 0.25
         if '</answer>' in r:    score += 0.25
         # Penalize extra text after closing tag
+```
+
+Continuation:
+
+```python
         if r.count('</answer>') == 1:
             extra_text = r.split('</answer>')[-1].strip()
             score -= len(extra_text) * 0.001
@@ -180,6 +200,11 @@ training_args = GRPOConfig(
     weight_decay=0.1,
     warmup_ratio=0.1,
     lr_scheduler_type='cosine',
+```
+
+Continuation:
+
+```python
 
     # Batch settings
     per_device_train_batch_size=1,
@@ -192,6 +217,11 @@ training_args = GRPOConfig(
 
     # Training duration
     num_train_epochs=1,
+```
+
+Continuation:
+
+```python
     max_steps=None,
 
     # Optimization
@@ -220,6 +250,11 @@ training_args = GRPOConfig(
     bf16=True,
     use_vllm=True,                # Fast generation with vLLM
     logging_steps=10,
+```
+
+Continuation:
+
+```python
 )
 ```
 
@@ -248,6 +283,11 @@ model = AutoModelForCausalLM.from_pretrained(
     attn_implementation="flash_attention_2",  # 2–3× faster
     device_map="auto",
 )
+```
+
+Continuation:
+
+```python
 
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 tokenizer.pad_token = tokenizer.eos_token
@@ -260,6 +300,11 @@ peft_config = LoraConfig(
         "q_proj", "k_proj", "v_proj", "o_proj",
         "gate_proj", "up_proj", "down_proj",
     ],
+```
+
+Continuation:
+
+```python
     task_type="CAUSAL_LM",
     lora_dropout=0.05,
 )
@@ -272,6 +317,11 @@ trainer = GRPOTrainer(
         format_reward,
         correctness_reward,
     ],
+```
+
+Continuation:
+
+```python
     args=training_args,
     train_dataset=dataset,
     peft_config=peft_config,   # Remove for full fine-tuning
@@ -295,6 +345,11 @@ model, tokenizer = FastLanguageModel.from_pretrained(
 
 model = FastLanguageModel.get_peft_model(
     model,
+```
+
+Continuation:
+
+```python
     r=32,
     target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
                     "gate_proj", "up_proj", "down_proj"],
@@ -364,6 +419,11 @@ trainer_stage1.train()
 trainer_stage2 = GRPOTrainer(
     model=model,
     reward_funcs=[format_reward, correctness_reward],
+```
+
+Continuation:
+
+```python
     ...
 )
 trainer_stage2.train()
@@ -384,6 +444,11 @@ class AdaptiveReward:
     def adjust_weight(self, success_rate):
         """Increase weight if model struggling, decrease if succeeding."""
         if success_rate < 0.3:
+```
+
+Continuation:
+
+```python
             self.weight *= 1.2
         elif success_rate > 0.8:
             self.weight *= 0.9
@@ -428,6 +493,11 @@ result = generator(
     max_new_tokens=256,
     do_sample=True,
     temperature=0.7,
+```
+
+Continuation:
+
+```python
     top_p=0.9,
 )
 print(result[0]['generated_text'])

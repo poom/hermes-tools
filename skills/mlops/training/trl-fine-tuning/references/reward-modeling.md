@@ -24,6 +24,11 @@ model = AutoModelForSequenceClassification.from_pretrained(
 tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen2.5-0.5B-Instruct")
 
 # Load preference dataset (chosen/rejected pairs)
+```
+
+Continuation:
+
+```python
 dataset = load_dataset("trl-lib/ultrafeedback_binarized", split="train")
 
 # Configure
@@ -36,6 +41,11 @@ config = RewardConfig(
 
 # Train
 trainer = RewardTrainer(
+```
+
+Continuation:
+
+```python
     model=model,
     args=config,
     processing_class=tokenizer,
