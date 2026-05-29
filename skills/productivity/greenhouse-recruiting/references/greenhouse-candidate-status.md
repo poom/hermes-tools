@@ -27,6 +27,11 @@ client = httpx.Client(base_url="https://harvest.greenhouse.io/v1", headers=heade
 def get(path, params):
     for _ in range(10):
         r = client.get(path, params=params)
+```
+
+Continuation:
+
+```python
         if r.status_code != 429:
             r.raise_for_status()
             return r
@@ -39,6 +44,11 @@ while True:
     r = get("/candidates", {"updated_after": "2026-01-01T00:00:00Z", "per_page": 500, "page": page})
     for c in r.json():
         name = f"{c.get('first_name','')} {c.get('last_name','')}".strip()
+```
+
+Continuation:
+
+```python
         if "harshit" in name.lower():
             matches.append((c["id"], name, c.get("application_ids")))
     if 'rel="next"' not in (r.headers.get("link") or ""):
