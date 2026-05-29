@@ -1,0 +1,59 @@
+{
+  "version": 3,
+  "runtime": "codex",
+  "context": {
+    "summary": [
+      "REPO_ROOT is the repository root used in the before_run examples."
+    ]
+  },
+  "cases": [
+    {
+      "id": "verify-secret-ref",
+      "question": "What exact command should an agent run to do the safe length-check validation for the npm registry ref op://Engineering/npm-registry/credential?",
+      "reference_answer": "op read --no-newline \"op://Engineering/npm-registry/credential\" | wc -c",
+      "scoring_notes": []
+    },
+    {
+      "id": "verify-node-toolchain",
+      "question": "What exact command validates that the declared Node toolchain installs and executes correctly?",
+      "reference_answer": "mise install && mise exec -- node --version",
+      "scoring_notes": []
+    },
+    {
+      "id": "render-netrc",
+      "question": "What exact command renders the committed .agents.netrc template into the agent's ~/.netrc file during before_run?",
+      "reference_answer": "envsubst < \"$REPO_ROOT/.agents.netrc\" > \"$HOME/.netrc\"",
+      "scoring_notes": []
+    },
+    {
+      "id": "lock-netrc",
+      "question": "After rendering ~/.netrc, what exact command locks down the file permissions?",
+      "reference_answer": "chmod 600 \"$HOME/.netrc\"",
+      "scoring_notes": []
+    },
+    {
+      "id": "render-composer-auth",
+      "question": "What exact command renders the committed .agents.auth.json template into ~/.composer/auth.json during before_run?",
+      "reference_answer": "envsubst < \"$REPO_ROOT/.agents.auth.json\" > \"$HOME/.composer/auth.json\"",
+      "scoring_notes": []
+    },
+    {
+      "id": "start-docker-test-services",
+      "question": "What exact command starts the agent test services from docker-compose.agents.yml during before_run?",
+      "reference_answer": "docker compose -f docker-compose.agents.yml up -d --wait",
+      "scoring_notes": []
+    },
+    {
+      "id": "stop-docker-test-services",
+      "question": "What exact command tears down the agent test services started from docker-compose.agents.yml?",
+      "reference_answer": "docker compose -f docker-compose.agents.yml down -v",
+      "scoring_notes": []
+    },
+    {
+      "id": "run-monorepo-package-tests",
+      "question": "In the monorepo example, what exact command runs the auth package tests?",
+      "reference_answer": "pnpm --filter @repo/auth test",
+      "scoring_notes": []
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+[
+  {
+    "id": "changes-requested-with-check",
+    "input": {
+      "script_reason": "changes requested by @jai; failing checks: policy-bot: main",
+      "review_detail": "Reviewer requested a metadata fix. policy-bot: main failed."
+    },
+    "expected": {
+      "must_include": ["changes requested", "@jai", "policy-bot"],
+      "must_not_include": ["ready to merge", "waiting on reviewer"]
+    },
+    "passing_summary": "changes requested by @jai; policy-bot: main is failing",
+    "failing_summary": "waiting on reviewer"
+  },
+  {
+    "id": "stale-branch",
+    "input": {
+      "script_reason": "branch is behind the base branch",
+      "review_detail": "GitHub reports mergeStateStatus BEHIND."
+    },
+    "expected": {
+      "must_include": ["behind", "base branch"],
+      "must_not_include": ["changes requested", "approved"]
+    },
+    "passing_summary": "branch is behind the base branch",
+    "failing_summary": "approved and ready"
+  }
+]

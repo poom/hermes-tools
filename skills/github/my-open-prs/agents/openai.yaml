@@ -1,0 +1,4 @@
+interface:
+  display_name: "My Open PRs"
+  short_description: "Review and merge status for your PRs"
+  default_prompt: "Use $my-open-prs to show my open PRs pending review or blocked from merging."

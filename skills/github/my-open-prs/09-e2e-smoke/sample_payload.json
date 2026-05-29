@@ -1,0 +1,45 @@
+{
+  "data": {
+    "search": {
+      "nodes": [
+        {
+          "number": 42,
+          "title": "Improve PR queue",
+          "url": "https://github.com/EWA-Services/helper/pull/42",
+          "reviewDecision": "REVIEW_REQUIRED",
+          "mergeStateStatus": "CLEAN",
+          "repository": {"name": "helper"},
+          "reviewRequests": {
+            "nodes": [
+              {"requestedReviewer": {"__typename": "User", "login": "reviewer"}}
+            ]
+          },
+          "latestReviews": {"nodes": []},
+          "statusCheckRollup": {"state": "SUCCESS", "contexts": {"nodes": []}}
+        },
+        {
+          "number": 43,
+          "title": "Fix blocked merge",
+          "url": "https://github.com/EWA-Services/helper/pull/43",
+          "reviewDecision": "CHANGES_REQUESTED",
+          "mergeStateStatus": "BEHIND",
+          "repository": {"name": "helper"},
+          "reviewRequests": {"nodes": []},
+          "latestReviews": {
+            "nodes": [
+              {"state": "CHANGES_REQUESTED", "author": {"login": "reviewer"}}
+            ]
+          },
+          "statusCheckRollup": {
+            "state": "FAILURE",
+            "contexts": {
+              "nodes": [
+                {"__typename": "CheckRun", "name": "unit", "status": "COMPLETED", "conclusion": "FAILURE"}
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+}

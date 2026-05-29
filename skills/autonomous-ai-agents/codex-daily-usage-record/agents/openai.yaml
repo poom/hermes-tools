@@ -1,0 +1,9 @@
+interface:
+  display_name: "Codex Daily Usage Record"
+  short_description: "Track daily Codex/ChatGPT subscription token usage from local Codex logs."
+  default_prompt: "Check or record daily Codex/ChatGPT token usage from local session logs, using per-machine CSV/JSON outputs."
+triggers:
+  - "check ChatGPT subscription token usage"
+  - "track Codex token usage daily"
+  - "daily Codex usage CSV"
+  - "aggregate Codex usage across machines"

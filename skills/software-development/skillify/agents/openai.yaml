@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skillify"
+  short_description: "Audit a skill against the 10 pass/fail skill creation gates"
+  default_prompt: "Skillify this folder: run the gate checker and show the failing gates first."

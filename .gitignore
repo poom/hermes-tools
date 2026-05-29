@@ -1,0 +1,41 @@
+# Runtime/cache files
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# Secrets and auth
+.env
+*.env
+auth.json
+auth.lock
+*token*
+*secret*
+*credential*
+
+# Hermes runtime state
+state.db*
+kanban.db*
+sessions/
+message-sessions/
+logs/
+cache/
+audio_cache/
+image_cache/
+sandboxes/
+state-snapshots/
+usage/
+cron/output/
+cron/.tick.lock
+worktrees/
+pr-worktrees/
+pr-work/
+pr-reviews/
+pr-monitors/
+
+# Skill runtime metadata (not source)
+skills/.hub/
+skills/.usage.json
+skills/.usage.json.lock
+skills/.curator_state
+skills/.curator_backups/
+skills/.archive/

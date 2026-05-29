@@ -1,0 +1,9 @@
+# Changelog
+
+## [0.2.0](https://github.com/EWA-Services/agent-resources/compare/skillify-v0.1.0...skillify-v0.2.0) (2026-05-05)
+
+
+### Features
+
+* **google-sheets:** add formatting-focused skill [AI-317] ([#89](https://github.com/EWA-Services/agent-resources/issues/89)) ([452997b](https://github.com/EWA-Services/agent-resources/commit/452997b8a7d6f5437a09239b9ae772891183cae5))
+* **skillify:** seed skillify gate-checker meta-skill [ENG-858] ([adfa34d](https://github.com/EWA-Services/agent-resources/commit/adfa34dc09c3ea187a3cd6f349cb69dcb7ca49f7))
