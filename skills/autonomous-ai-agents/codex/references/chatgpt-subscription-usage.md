@@ -5,7 +5,7 @@ Session learning: checking "ChatGPT subscription token usage" from a machine aut
 ## What is available
 
 - `codex login status` may show `Logged in using ChatGPT` even when the access token is expired; a real Codex call can still fail with 401.
-- Codex CLI stores per-session token accounting in `~/.codex/sessions/**/rollout-*.jsonl`.
+- Codex CLI stores per-session token accounting in `<home>/.codex/sessions/**/rollout-*.jsonl`.
 - Recent Codex session JSONL can include:
   - `payload.info.total_token_usage.{input_tokens,cached_input_tokens,output_tokens,reasoning_output_tokens,total_tokens}`
   - `payload.rate_limits` with `plan_type`, `primary.used_percent`, `secondary.used_percent`, reset timestamps, etc.
@@ -50,6 +50,11 @@ for p in root.rglob('*.jsonl'):
             except Exception: continue
             ts=obj.get('timestamp')
             if ts and not first_ts: first_ts=ts
+```
+
+Continuation:
+
+```bash
             payload=obj.get('payload') or {}
             if not isinstance(payload, dict): continue
             model=payload.get('model') or model
@@ -62,6 +67,11 @@ for p in root.rglob('*.jsonl'):
             if isinstance(rl, dict):
                 rate_events.append((ts, str(p), rl))
     except Exception:
+```
+
+Continuation:
+
+```bash
         continue
     if max_usage:
         sessions.append({'day': (first_ts or latest_ts or '')[:10], 'model': model, 'usage': max_usage})
@@ -74,6 +84,11 @@ for label,prefix in [('current_month','2026-05'),('all_local_logs',None)]:
         for k in ['input_tokens','cached_input_tokens','output_tokens','reasoning_output_tokens','total_tokens']:
             agg[k] += int(s['usage'].get(k) or 0)
             by_day[s['day']][k] += int(s['usage'].get(k) or 0)
+```
+
+Continuation:
+
+```bash
     print('\n', label, 'sessions_with_usage', n)
     print(dict(agg))
     for d,c in sorted(by_day.items()):

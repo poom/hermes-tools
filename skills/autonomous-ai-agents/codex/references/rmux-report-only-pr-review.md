@@ -25,6 +25,11 @@ cd "$REPO"
 {
   echo "codex_start $(date -u +%Y-%m-%dT%H:%M:%SZ)"
   codex exec --model gpt-5.5 --sandbox read-only --skip-git-repo-check "$(cat "$PROMPT")"
+```
+
+Continuation:
+
+```bash
   code=$?
   echo "codex_exit $code $(date -u +%Y-%m-%dT%H:%M:%SZ)"
   echo "$code" > "$STATUS"
