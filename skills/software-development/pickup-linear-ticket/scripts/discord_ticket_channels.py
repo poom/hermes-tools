@@ -47,7 +47,7 @@ def load_dotenv_token() -> str:
             key, value = line.split("=", 1)
             if key.strip() == "DISCORD_BOT_TOKEN":
                 return value.strip().strip('"').strip("'")
-    raise SystemExit("DISCORD_BOT_TOKEN is not available in env or ~/.hermes/.env")
+    raise SystemExit("DISCORD_BOT_TOKEN is not available in env or <home>/.hermes/.env")
 
 
 def discord_request(method: str, path: str, token: str, *, body: dict[str, Any] | None = None) -> Any:

@@ -56,6 +56,11 @@ valueWhenReady$(): Observable<boolean> {
     EXPERIMENT_KEYS[
       "POOM-FE-2470-Redirect-authenticated-users-away-from-landing-page"
     ],
+```
+
+Continuation:
+
+```ts
     { refreshOnSubscribe: true }
   );
 }
