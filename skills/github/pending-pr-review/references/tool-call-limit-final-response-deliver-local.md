@@ -44,6 +44,11 @@ Completed/reported:
 
 Started but unfinished:
 - Repo #124 — channel/evidence gathered, but no GitHub review posted and no final per-PR result sent.
+```
+
+Continuation:
+
+```text
   - PR: https://github.com/ORG/Repo/pull/124
   - Channel created: discord:...
   - Preliminary evidence: ...
@@ -56,6 +61,11 @@ Counts:
 - Completed and user-reported: 1
 - Skipped duplicate/current-head decisions: 0
 - Failed: 0
+```
+
+Continuation:
+
+```text
 - Started but unfinished: 1
 - Not started from last snapshot: 1
 

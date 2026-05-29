@@ -31,7 +31,7 @@ Keep the script default raw limit high enough for the queue shape, currently `30
 After changing the default, verify with:
 
 ```bash
-bash ~/.hermes/skills/github/pending-pr-review/scripts/list_pending_prs.sh --json > /tmp/pending-prs.json
+bash <home>/.hermes/skills/github/pending-pr-review/scripts/list_pending_prs.sh --json > /tmp/pending-prs.json
 python3 - <<'PY'
 import json
 prs=json.load(open('/tmp/pending-prs.json'))

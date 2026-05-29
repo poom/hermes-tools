@@ -38,6 +38,11 @@ Started but not completed before cutoff:
   - Last observed head: <sha>
   - Evidence collected: <short list>
   - GitHub action: none / no formal review posted
+```
+
+Continuation:
+
+```text
   - Discord: no final per-PR result sent
 
 Queue status:

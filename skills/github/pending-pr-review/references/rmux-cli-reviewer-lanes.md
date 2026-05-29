@@ -40,6 +40,11 @@ rmux new-session -d -s pr-review-codex \
   "cd '$REPO' && python3 '$ROOT/codex_reviewer.py'"
 
 # Claude Reviewer B: no `-p`; drive interactive Claude Code inside rmux/tmux.
+```
+
+Continuation:
+
+```bash
 python "${HERMES_HOME:-$HOME/.hermes}/skills/github/pending-pr-review/scripts/rmux_claude_interactive_reviewer.py" \
   --session pr-review-claude \
   --workdir "$REPO" \

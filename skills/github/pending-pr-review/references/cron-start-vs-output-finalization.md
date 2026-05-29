@@ -4,7 +4,7 @@ Session-derived operational note for pending PR review cron diagnostics.
 
 ## Durable behavior
 
-Hermes cron can advance `next_run_at` as soon as a scheduled job starts, while `last_run_at`, final status, and `~/.hermes/cron/output/<job-id>/*.md` are only updated when that run finishes or errors.
+Hermes cron can advance `next_run_at` as soon as a scheduled job starts, while `last_run_at`, final status, and `<home>/.hermes/cron/output/<job-id>/*.md` are only updated when that run finishes or errors.
 
 This means a job can look like:
 

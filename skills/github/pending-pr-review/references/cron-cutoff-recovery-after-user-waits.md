@@ -6,7 +6,7 @@ Use this when Poom asks for the result of a scheduled `pending-pr-review` run th
 
 1. Identify the job/run:
    - `cronjob list` or `hermes cron list` for `pending-pr-review-hourly`.
-   - Note `last_run_at`, `last_status`, `next_run_at`, and the newest output file under `~/.hermes/cron/output/<job-id>/`.
+   - Note `last_run_at`, `last_status`, `next_run_at`, and the newest output file under `<home>/.hermes/cron/output/<job-id>/`.
 2. Read the newest output file near its end first. For failed deliver-local runs, the useful recovery summary is usually under `## Error`, not near the top (the top contains loaded skill text and prompt).
 3. Classify each item in the recovery summary:
    - **Completed/verified**: formal GitHub review id exists and per-PR/user-facing report was sent. Do not duplicate.
@@ -32,6 +32,11 @@ existing = [r for r in rs if r.get('user',{}).get('login') == 'poom'
 if existing:
     print('skip duplicate', existing[-1]['id'], existing[-1]['state'])
     sys.exit(3)
+```
+
+Continuation:
+
+```bash
 PY
 ```
 
@@ -54,6 +59,11 @@ Recovered now:
 - PR channel: <discord URL>
 
 Current pending queue after recovery: <count> PRs remain:
+```
+
+Continuation:
+
+```text
 - ...
 ```
 
