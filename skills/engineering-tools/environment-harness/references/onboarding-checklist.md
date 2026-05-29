@@ -12,7 +12,7 @@ Use this checklist when making a repo agent-ready.
 - create `.mise.toml` or `.tool-versions`
 - list required private registries and test credentials
 - create or verify the needed 1Password items
-- add `.agents.env` refs as `KEY=op://vault/item/field`
+- add `.agents.env` refs as `KEY=<secret-store-reference>`
 - add `.agents.npmrc` or other `.agents.<tool-config>` templates when the tool needs a config file
 
 ## Validation

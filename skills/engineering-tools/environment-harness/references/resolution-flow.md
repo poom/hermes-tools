@@ -10,16 +10,16 @@ This reference contains the full examples that were extracted from `SKILL.md` to
 
 ```env
 # .agents.env
-# Format: KEY=op://vault/item/field
+# Format: KEY=<secret-store-reference>
 
-NPM_TOKEN=op://Engineering/npm-registry/credential
-FONTAWESOME_TOKEN=op://Engineering/fontawesome-pro/npm-token
-GH_PACKAGES_TOKEN=op://Engineering/github-packages/token
+NPM_TOKEN=<secret-store-reference>
+FONTAWESOME_TOKEN=<secret-store-reference>
+GH_PACKAGES_TOKEN=<secret-store-reference>
 ```
 
 Rules:
 
-- every non-comment line is `KEY=op://vault/item/field`
+- every non-comment line is `KEY=<secret-store-reference>`
 - blank lines are ignored
 - default values and shell interpolation are not allowed
 - unresolved refs should fail the run loudly
@@ -70,6 +70,11 @@ resolve_agents_env() {
     local value
     value=$(op read "$ref" 2>/dev/null) || {
       echo "ERROR: Failed to resolve $key from $ref" >&2
+```
+
+Continuation:
+
+```bash
       echo "Check: Does the 1Password item exist? Does the service account have access?" >&2
       return 1
     }
@@ -82,6 +87,11 @@ setup_tools() {
   if [[ -f "$REPO_ROOT/.mise.toml" ]]; then
     mise trust "$REPO_ROOT"
     mise install
+```
+
+Continuation:
+
+```bash
   fi
 }
 

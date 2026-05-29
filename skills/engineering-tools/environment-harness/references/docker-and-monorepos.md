@@ -19,6 +19,11 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U test"]
       interval: 2s
+```
+
+Continuation:
+
+```yaml
       timeout: 5s
       retries: 5
 

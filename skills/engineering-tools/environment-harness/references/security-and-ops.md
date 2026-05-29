@@ -46,7 +46,7 @@ The environment harness is for agent environments, not CI, but the responsibilit
 
 ## Versioning
 
-Current contract is intentionally simple: `KEY=op://vault/item/field`.
+Current contract is intentionally simple: `KEY=<secret-store-reference>`.
 
 Only add schema versioning if the format must support new secret backends or conditionals. Until then, keep the parser simple and backward-compatible.
 

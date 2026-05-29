@@ -9,8 +9,8 @@
   "cases": [
     {
       "id": "verify-secret-ref",
-      "question": "What exact command should an agent run to do the safe length-check validation for the npm registry ref op://Engineering/npm-registry/credential?",
-      "reference_answer": "op read --no-newline \"op://Engineering/npm-registry/credential\" | wc -c",
+      "question": "What exact command should an agent run to do the safe length-check validation for the npm registry ref <secret-store-reference>",
+      "reference_answer": "op read --no-newline \"<secret-store-reference>" | wc -c",
       "scoring_notes": []
     },
     {
@@ -21,19 +21,19 @@
     },
     {
       "id": "render-netrc",
-      "question": "What exact command renders the committed .agents.netrc template into the agent's ~/.netrc file during before_run?",
+      "question": "What exact command renders the committed .agents.netrc template into the agent's <home>/.netrc file during before_run?",
       "reference_answer": "envsubst < \"$REPO_ROOT/.agents.netrc\" > \"$HOME/.netrc\"",
       "scoring_notes": []
     },
     {
       "id": "lock-netrc",
-      "question": "After rendering ~/.netrc, what exact command locks down the file permissions?",
+      "question": "After rendering <home>/.netrc, what exact command locks down the file permissions?",
       "reference_answer": "chmod 600 \"$HOME/.netrc\"",
       "scoring_notes": []
     },
     {
       "id": "render-composer-auth",
-      "question": "What exact command renders the committed .agents.auth.json template into ~/.composer/auth.json during before_run?",
+      "question": "What exact command renders the committed .agents.auth.json template into <home>/.composer/auth.json during before_run?",
       "reference_answer": "envsubst < \"$REPO_ROOT/.agents.auth.json\" > \"$HOME/.composer/auth.json\"",
       "scoring_notes": []
     },

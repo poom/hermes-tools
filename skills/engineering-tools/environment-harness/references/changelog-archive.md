@@ -11,6 +11,6 @@
 ## [0.3.0](https://github.com/EWA-Services/agent-resources/compare/environment-harness-v0.2.1...environment-harness-v0.3.0) (2026-05-26)
 
 
-### Features
+### Features (2)
 
 * **skills:** establish ownership model + canonical catalog [ENG-872] ([#181](https://github.com/EWA-Services/agent-resources/issues/181)) ([d5401bc](https://github.com/EWA-Services/agent-resources/commit/d5401bc005062f1e5156349e6b3f09fda90ad061))

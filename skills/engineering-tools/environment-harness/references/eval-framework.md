@@ -93,6 +93,11 @@ Spawn an **Opus orchestrator subagent** that:
 ├── system-agents.md   # Org AGENTS.md from PR #312
 ├── logs/              # Per-task run artifacts
 │   └── acs-1204/
+```
+
+Continuation:
+
+```
 │       ├── task.json
 │       ├── prompt.md
 │       ├── shipped.diff
