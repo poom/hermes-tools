@@ -9,7 +9,7 @@ Use this pattern when a scheduled Hermes reminder should post into one Discord t
 ## Pattern
 
 1. Create a deterministic collector/helper script that runs at the beginning of the cron job.
-2. The helper uses Discord REST API with `DISCORD_BOT_TOKEN` from `~/.hermes/.env` (never print the token):
+2. The helper uses Discord REST API with `DISCORD_BOT_TOKEN` from `<home>/.hermes/.env` (never print the token):
    - `GET /channels/{parent_channel_id}` to get guild/channel metadata.
    - `GET /guilds/{guild_id}/threads/active` and find a thread with exact name `Reminder YYYY-MM-DD` and `parent_id == parent_channel_id`.
    - If not active, `GET /channels/{parent_channel_id}/threads/archived/public?limit=100` and find the same name.
@@ -43,4 +43,4 @@ Use this pattern when a scheduled Hermes reminder should post into one Discord t
 - This pattern depends on the bot having Discord permissions to create/manage public threads in the parent channel.
 - Cron prompts are scanned both at create/update time and again after script output + skill content are assembled. If a collector injects untrusted email/chat/PR text, sanitize it before printing JSON: strip invisible Unicode (`U+200B`, `U+200C`, `U+200D`, `U+2060`, `U+FEFF`, bidi controls) and replace prompt-injection/exfiltration-looking snippets that match `tools/cronjob_tools.py::_CRON_THREAT_PATTERNS` (for example command-like `curl ... $TOKEN` text). Otherwise a reminder can silently fail with `last_status=error` and messages like `Blocked: prompt contains invisible unicode U+200C` or `Blocked: prompt matches threat pattern 'exfil_curl'`.
 - If the job prompt says `deliver: local` + `send_message`, ensure the global cron hint does not contradict it. The historical hint said “do NOT use send_message”; either patch it to allow explicit deliver-local workflows or make the job `deliver: origin` and avoid dynamic thread routing. A contradictory hint can make the agent generate the reminder locally without actually posting it to Discord.
-- To verify a missed reminder fix: run the collector script manually and scan stdout for `_CRON_THREAT_PATTERNS` + invisible chars; trigger the job with `hermes cron run <id>` or the cronjob tool; wait for completion; confirm `hermes cron list` shows `last_status: ok`; inspect `~/.hermes/sessions/session_cron_<id>_*.json` for the final assistant content or tool calls.
+- To verify a missed reminder fix: run the collector script manually and scan stdout for `_CRON_THREAT_PATTERNS` + invisible chars; trigger the job with `hermes cron run <id>` or the cronjob tool; wait for completion; confirm `hermes cron list` shows `last_status: ok`; inspect `<home>/.hermes/sessions/session_cron_<id>_*.json` for the final assistant content or tool calls.

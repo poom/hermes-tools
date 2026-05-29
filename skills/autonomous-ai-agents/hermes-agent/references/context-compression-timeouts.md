@@ -71,7 +71,7 @@ When the user asks what the connection error was, show exact evidence rather tha
    python - <<'PY'
    from pathlib import Path
    import os, re
-   logdir = Path(os.path.expanduser('~/.hermes/logs'))
+   logdir = Path(os.path.expanduser('<home>/.hermes/logs'))
    terms = re.compile(r'connection error|ConnectionError|client has been closed|failed to generate context summary|Manual compress failed|openai.APIConnectionError', re.I)
    for path in sorted(logdir.glob('*.log')):
        try:
@@ -88,7 +88,7 @@ When the user asks what the connection error was, show exact evidence rather tha
 2. If traceback context is needed, read a range around the latest `openai.APIConnectionError: Connection error.` in `errors.log` or `gateway.error.log`.
 3. To confirm what `/compress` wrote, inspect the continuation transcript named in the log line `Session split detected: <old> → <new> (compression)`:
    ```bash
-   sed -n '1,12p' ~/.hermes/sessions/<new_session_id>.jsonl
+   sed -n '1,12p' <home>/.hermes/sessions/<new_session_id>.jsonl
    ```
    Fallback compression writes a `[CONTEXT COMPACTION — REFERENCE ONLY]` placeholder with text such as `Summary generation was unavailable`.
 4. In the final answer, include three pieces only unless asked for more: the relevant auxiliary log lines, the underlying exception, and the user-facing compression warning/placeholder consequence.
@@ -126,6 +126,11 @@ class FakeStream:
         return SimpleNamespace(output=[SimpleNamespace(type='message', content=[SimpleNamespace(type='output_text', text='ok')])], usage=None)
 class FakeResponses:
     def __init__(self): self.kwargs = None
+```
+
+Continuation:
+
+```bash
     def stream(self, **kwargs): self.kwargs = kwargs; return FakeStream()
 
 fake = SimpleNamespace(responses=FakeResponses())

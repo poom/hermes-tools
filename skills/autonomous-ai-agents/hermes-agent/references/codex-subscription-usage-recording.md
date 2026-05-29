@@ -5,18 +5,18 @@ Use this when the user asks to keep daily records of ChatGPT subscription / Code
 ## Key distinction
 
 - OpenAI API billing has a platform usage dashboard.
-- ChatGPT subscription / Codex usage is different: locally available evidence comes from Codex JSONL session logs under `~/.codex/sessions/` plus occasional `rate_limits` snapshots in those logs.
-- This is machine-local. One machine's `~/.codex/sessions/` does not include usage from other machines.
+- ChatGPT subscription / Codex usage is different: locally available evidence comes from Codex JSONL session logs under `<home>/.codex/sessions/` plus occasional `rate_limits` snapshots in those logs.
+- This is machine-local. One machine's `<home>/.codex/sessions/` does not include usage from other machines.
 
 ## Local daily recorder pattern
 
-Create a deterministic `no_agent` cron script under `~/.hermes/scripts/`, e.g. `codex_daily_usage_record.py`, that:
+Create a deterministic `no_agent` cron script under `<home>/.hermes/scripts/`, e.g. `codex_daily_usage_record.py`, that:
 
-1. Scans `~/.codex/sessions/**/*.jsonl`.
+1. Scans `<home>/.codex/sessions/**/*.jsonl`.
 2. For each session file, reads only metadata fields and usage objects, not message contents.
 3. Takes the maximum `payload.info.total_token_usage.total_tokens` seen per session file to avoid double counting incremental updates within one session.
 4. Aggregates by local calendar day.
-5. Writes idempotent outputs under `~/.hermes/usage/`.
+5. Writes idempotent outputs under `<home>/.hermes/usage/`.
 6. Prints a compact summary for cron delivery.
 
 Usage fields observed in Codex logs:
@@ -37,8 +37,8 @@ payload.rate_limits.plan_type
 Daily usage records are local unless every Codex machine runs the recorder. Include a machine ID in filenames and rows:
 
 ```text
-~/.hermes/usage/codex_daily_usage_<machine>.csv
-~/.hermes/usage/codex_daily_usage_latest_<machine>.json
+<home>/.hermes/usage/codex_daily_usage_<machine>.csv
+<home>/.hermes/usage/codex_daily_usage_latest_<machine>.json
 ```
 
 Derive `<machine>` from `CODEX_USAGE_MACHINE_ID` or `socket.gethostname()` sanitized for filenames. Print `Machine: <machine>` in the cron output so Discord summaries are not mistaken for all-account totals.
@@ -60,8 +60,8 @@ Verify with:
 
 ```bash
 hermes cron list
-~/.hermes/scripts/codex_daily_usage_record.py
-head ~/.hermes/usage/codex_daily_usage_*.csv
+<home>/.hermes/scripts/codex_daily_usage_record.py
+head <home>/.hermes/usage/codex_daily_usage_*.csv
 ```
 
 ## Auth notes
