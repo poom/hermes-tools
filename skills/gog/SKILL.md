@@ -1,7 +1,6 @@
 ---
 name: gog
-description: Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs.
-homepage: https://gogcli.sh
+description: Use when applying the gog skill workflow: Google Workspace CLI for Gmail, Calendar, Drive, Contacts, Sheets, and Docs. Triggered by requests mentioning gog, gog, setup, operation, troubleshooting, review, or automation for this workflow.
 metadata:
   {
     "openclaw":
@@ -21,100 +20,27 @@ metadata:
       },
   }
 ---
-
 # gog
 
-Use `gog` for Gmail/Calendar/Drive/Contacts/Sheets/Docs. Requires OAuth setup.
+## Protocol
 
-Setup (once)
+1. Use this skill only when the user request matches the trigger description or explicitly names `gog`.
+2. Read the linked references before taking action; they preserve the detailed step-by-step procedures from the previous guide.
+3. Prefer deterministic scripts for repeatable validation and use the documented smoke command before live side effects.
+4. If credentials, network access, or external systems are required, run the offline checks first and then ask for or verify the required access.
+5. Keep new operational detail in `references/` and keep `SKILL.md` focused on routing, protocol, and failure behavior.
 
-- `gog auth credentials /path/to/client_secret.json`
-- `gog auth add you@gmail.com --services gmail,calendar,drive,contacts,docs,sheets`
-- `gog auth list`
+## References
 
-Common commands
+- [Preserved Skill Guide](references/preserved-skill-guide.md) - preserved detailed guidance or domain-specific operations.
 
-- Gmail search: `gog gmail search 'newer_than:7d' --max 10`
-- Gmail messages search (per email, ignores threading): `gog gmail messages search "in:inbox from:ryanair.com" --max 20 --account you@example.com`
-- Unread Gmail triage for automation: `gog --account work gmail messages search 'is:unread newer_than:14d' --max 12 --json --results-only --include-body --no-input`
-- Google Chat triage (Poom setup): prefer `poke chat -f json --timeout 180` when available; it wraps `gog chat` and returns stable sections for agent summaries.
-- Gmail send (plain): `gog gmail send --to a@b.com --subject "Hi" --body "Hello"`
-- Gmail send (multi-line): `gog gmail send --to a@b.com --subject "Hi" --body-file ./message.txt`
-- Gmail send (stdin): `gog gmail send --to a@b.com --subject "Hi" --body-file -`
-- Gmail send (HTML): `gog gmail send --to a@b.com --subject "Hi" --body-html "<p>Hello</p>"`
-- Gmail draft: `gog gmail drafts create --to a@b.com --subject "Hi" --body-file ./message.txt`
-- Gmail send draft: `gog gmail drafts send <draftId>`
-- Gmail reply: `gog gmail send --to a@b.com --subject "Re: Hi" --body "Reply" --reply-to-message-id <msgId>`
-- Calendar list events: `gog calendar events <calendarId> --from <iso> --to <iso>`
-- Calendar create event: `gog calendar create <calendarId> --summary "Title" --from <iso> --to <iso>`
-- Calendar create with color: `gog calendar create <calendarId> --summary "Title" --from <iso> --to <iso> --event-color 7`
-- Calendar update event: `gog calendar update <calendarId> <eventId> --summary "New Title" --event-color 4`
-- Calendar show colors: `gog calendar colors`
-- Drive search: `gog drive search "query" --max 10`
-- Contacts: `gog contacts list --max 20`
-- Sheets get: `gog sheets get <sheetId> "Tab!A1:D10" --json`
-- Sheets update: `gog sheets update <sheetId> "Tab!A1:B2" --values-json '[["A","B"],["1","2"]]' --input USER_ENTERED`
-- Sheets append: `gog sheets append <sheetId> "Tab!A:C" --values-json '[["x","y","z"]]' --insert INSERT_ROWS`
-- Sheets clear: `gog sheets clear <sheetId> "Tab!A2:Z"`
-- Sheets metadata: `gog sheets metadata <sheetId> --json`
-- Docs export: `gog docs export <docId> --format txt --out /tmp/doc.txt`
-- Docs cat: `gog docs cat <docId>`
+## Scripts
 
-Calendar Colors
+- `scripts/skill_health.py` - deterministic support or offline coverage for this skill.
+- `scripts/test_skill_health.py` - deterministic support or offline coverage for this skill.
 
-- Use `gog calendar colors` to see all available event colors (IDs 1-11)
-- Add colors to events with `--event-color <id>` flag
-- Event color IDs (from `gog calendar colors` output):
-  - 1: #a4bdfc
-  - 2: #7ae7bf
-  - 3: #dbadff
-  - 4: #ff887c
-  - 5: #fbd75b
-  - 6: #ffb878
-  - 7: #46d6db
-  - 8: #e1e1e1
-  - 9: #5484ed
-  - 10: #51b749
-  - 11: #dc2127
+## Failure Behavior
 
-Email Formatting
-
-- Prefer plain text. Use `--body-file` for multi-paragraph messages (or `--body-file -` for stdin).
-- Same `--body-file` pattern works for drafts and replies.
-- `--body` does not unescape `\n`. If you need inline newlines, use a heredoc or `$'Line 1\n\nLine 2'`.
-- Use `--body-html` only when you need rich formatting.
-- HTML tags: `<p>` for paragraphs, `<br>` for line breaks, `<strong>` for bold, `<em>` for italic, `<a href="url">` for links, `<ul>`/`<li>` for lists.
-- Example (plain text via stdin):
-
-  ```bash
-  gog gmail send --to recipient@example.com \
-    --subject "Meeting Follow-up" \
-    --body-file - <<'EOF'
-  Hi Name,
-
-  Thanks for meeting today. Next steps:
-  - Item one
-  - Item two
-
-  Best regards,
-  Your Name
-  EOF
-  ```
-
-- Example (HTML list):
-  ```bash
-  gog gmail send --to recipient@example.com \
-    --subject "Meeting Follow-up" \
-    --body-html "<p>Hi Name,</p><p>Thanks for meeting today. Here are the next steps:</p><ul><li>Item one</li><li>Item two</li></ul><p>Best regards,<br>Your Name</p>"
-  ```
-
-Notes
-
-- Set `GOG_ACCOUNT=you@gmail.com` to avoid repeating `--account`.
-- For scripting, prefer `--json` plus `--no-input`.
-- For unread-email summaries, use `gmail messages search` rather than thread search, and keep payloads compact (e.g. max 8-12, body truncated) before feeding them into scheduled agents.
-- For Google Chat unread summaries on Poom's machine, use `$HOME/.local/bin/poke chat -f json --timeout 180`; raw `gog chat` fan-out is slower and poke handles spaces, unread messages, sender resolution, and stable JSON formatting.
-- Sheets values can be passed via `--values-json` (recommended) or as inline rows.
-- Docs supports export/cat/copy. In-place edits require a Docs API client (not in gog).
-- Confirm before sending mail or creating events.
-- `gog gmail search` returns one row per thread; use `gog gmail messages search` when you need every individual email returned separately.
+- If the request does not match this skill, do not force the workflow; use the more specific skill or normal repo process.
+- If a referenced command cannot run because credentials or live endpoints are unavailable, report the blocked check and continue with offline evidence.
+- If the preserved guide conflicts with current repository state, verify the live files first and update the relevant reference before proceeding.
