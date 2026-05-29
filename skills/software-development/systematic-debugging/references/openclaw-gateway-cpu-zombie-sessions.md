@@ -21,7 +21,7 @@ GitHub issue: `openclaw/openclaw#75707` — "Gateway CPU pinned at 100%: root ca
 
 Relevant reported causes/workarounds:
 
-- Persisted session files in `~/.openclaw/agents/*/sessions/*.jsonl` can relaunch embedded runs on gateway start.
+- Persisted session files in `<home>/.openclaw/agents/*/sessions/*.jsonl` can relaunch embedded runs on gateway start.
 - Compaction/session cleanup loops and session locks can compound gateway CPU saturation.
 - Old sessions, large workspaces, plugin/channel startup loops, and per-message prep costs can all amplify CPU burn.
 - Suggested workaround in the issue: purge or archive session artifacts; but do this only after a verified backup.
@@ -41,7 +41,7 @@ Relevant reported causes/workarounds:
    ```
 3. Inspect recent logs for root-cause indicators:
    ```bash
-   grep -E 'liveness warning|stuck session|SessionWriteLockTimeout|CommandLaneTaskTimeout|active-memory|GatewayTransportError|whatsapp|telegram' ~/.openclaw/logs/gateway.err.log | tail -80
+   grep -E 'liveness warning|stuck session|SessionWriteLockTimeout|CommandLaneTaskTimeout|active-memory|GatewayTransportError|whatsapp|telegram' <home>/.openclaw/logs/gateway.err.log | tail -80
    ```
 4. If restarting, verify PID changed and wait at least 1–3 minutes while sampling CPU.
 5. If CPU returns immediately after force-kill/restart and old sessions appear active, consider session cleanup.
@@ -65,6 +65,11 @@ sleep 5
 find "$HOME/.openclaw/agents" -path '*/sessions/*' \
   \( -name '*.jsonl' -o -name '*.jsonl.lock' -o -name 'sessions.json' -o -name 'sessions.json.lock' \) \
   -type f -print > "$backup_dir/manifest.txt"
+```
+
+Continuation:
+
+```bash
 
 # Archive exactly those files, preserving relative paths.
 tar -czf "$backup_dir/session-artifacts.tar.gz" -C "$HOME/.openclaw" \
@@ -96,7 +101,7 @@ openclaw gateway stability
 
 ## Pitfalls learned
 
-- A tar of the entire `~/.openclaw/agents` can time out or be truncated because workspaces/caches are large. A truncated archive can still list/extract some files, but it is not a valid backup.
+- A tar of the entire `<home>/.openclaw/agents` can time out or be truncated because workspaces/caches are large. A truncated archive can still list/extract some files, but it is not a valid backup.
 - Always run `gzip -t` and `tar -tzf` before any destructive action.
 - If the user says to interrupt/stop and explain, stop tool loops and summarize; do not continue collecting more diagnostics.
 - For user-facing incident response, prefer short status updates before long waits or multi-minute checks, especially after a destructive or risky step.

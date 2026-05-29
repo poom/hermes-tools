@@ -13,14 +13,14 @@ In OpenClaw's Telegram extension, this is a generic fallback emitted when messag
 Known source locations from OpenClaw 2026.4.29:
 
 ```text
-~/.openclaw/plugin-runtime-deps/openclaw-*/dist/extensions/telegram/*.js
-~/.openclaw/plugin-runtime-deps/openclaw-*/dist/agent-runner.runtime-*.js
+<home>/.openclaw/plugin-runtime-deps/openclaw-*/dist/extensions/telegram/*.js
+<home>/.openclaw/plugin-runtime-deps/openclaw-*/dist/agent-runner.runtime-*.js
 ```
 
 Search command:
 
 ```bash
-grep -R "Something went wrong while processing your request" ~/.openclaw/plugin-runtime-deps ~/.openclaw/agents 2>/dev/null | head -20
+grep -R "Something went wrong while processing your request" <home>/.openclaw/plugin-runtime-deps <home>/.openclaw/agents 2>/dev/null | head -20
 ```
 
 ## Fast evidence-gathering sequence
@@ -51,6 +51,11 @@ except Exception as e:
 finally:
     s.close()
 PY
+```
+
+Continuation:
+
+```bash
 curl -sS --max-time 5 -I http://127.0.0.1:18789/ 2>&1 | head -40 || true
 ```
 
@@ -61,14 +66,14 @@ If TCP connects but HTTP/WebSocket health calls time out, the gateway process is
 Recent OpenClaw logs are usually under:
 
 ```text
-~/.openclaw/logs/gateway.err.log
-~/.openclaw/logs/gateway.log
+<home>/.openclaw/logs/gateway.err.log
+<home>/.openclaw/logs/gateway.log
 ```
 
 Useful search:
 
 ```bash
-grep -Ei 'dispatch failed|message processing failed|final reply failed|before_prompt_build handler from active-memory failed|CommandLaneTaskTimeoutError|SessionWriteLockTimeout|session-write-lock|liveness warning|Polling stall|sendMessage failed|sendChatAction failed|fetch timeout|closed before connect|embedded run failover decision' ~/.openclaw/logs/gateway.err.log | tail -100
+grep -Ei 'dispatch failed|message processing failed|final reply failed|before_prompt_build handler from active-memory failed|CommandLaneTaskTimeoutError|SessionWriteLockTimeout|session-write-lock|liveness warning|Polling stall|sendMessage failed|sendChatAction failed|fetch timeout|closed before connect|embedded run failover decision' <home>/.openclaw/logs/gateway.err.log | tail -100
 ```
 
 Interpretation hints:

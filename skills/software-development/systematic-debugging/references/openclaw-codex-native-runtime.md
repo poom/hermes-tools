@@ -34,13 +34,13 @@ A passing `codex exec` proves personal ChatGPT login works, but OpenClaw may sti
 
 1. Back up config before edits:
    ```bash
-   cp ~/.openclaw/openclaw.json ~/.openclaw/openclaw.json.pre-codex-runtime-fix.$(date +%Y%m%d-%H%M%S).bak
+   cp <home>/.openclaw/openclaw.json <home>/.openclaw/openclaw.json.pre-codex-runtime-fix.$(date +%Y%m%d-%H%M%S).bak
    ```
 2. Inspect model/runtime configuration without printing secrets:
    ```bash
    python3 - <<'PY'
    import json, pathlib
-   d=json.loads(pathlib.Path('~/.openclaw/openclaw.json').expanduser().read_text())
+   d=json.loads(pathlib.Path('<home>/.openclaw/openclaw.json').expanduser().read_text())
    defs=d.get('agents',{}).get('defaults',{})
    print('primary=', defs.get('model',{}).get('primary'))
    print('fallbacks=', defs.get('model',{}).get('fallbacks'))
@@ -103,7 +103,7 @@ Expect existing/stored sessions to still display their historical pinned model (
 ## Pitfalls
 
 - Avoid running `openclaw health` unbounded when the gateway is wedged; use `timeout`.
-- Do not print `~/.openclaw/openclaw.json` or logs raw; redact emails, tokens, API keys, bot tokens, and auth headers.
+- Do not print `<home>/.openclaw/openclaw.json` or logs raw; redact emails, tokens, API keys, bot tokens, and auth headers.
 - Do not conflate `openai-codex/*` with the native subscription route. It is the PI OAuth route, but `openai-codex:*` auth profiles can still be relevant as credentials for native Codex app-server login bridging.
-- Do not keep retrying plugin installs blindly after `ConfigMutationConflictError`; check whether the package exists under `~/.openclaw/npm/node_modules/@openclaw/codex` and whether the registry/install records know about it.
+- Do not keep retrying plugin installs blindly after `ConfigMutationConflictError`; check whether the package exists under `<home>/.openclaw/npm/node_modules/@openclaw/codex` and whether the registry/install records know about it.
 - User preference from this incident: when a side-effecting system recovery is functionally verified but still noisy (CPU/event-loop warnings), stop and summarize unless asked to keep stabilizing.

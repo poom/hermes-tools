@@ -85,7 +85,7 @@ SessionWriteLockTimeoutError: session file locked
 4. **Inspect recent logs for root cause before changing config.**
 
    ```bash
-   grep -E 'active-memory failed|CommandLaneTaskTimeoutError|SessionWriteLockTimeoutError|sendMessage failed|message processing failed|final reply failed|liveness warning|Polling stall|fetch-timeout|GatewayTransportError|closed before connect|agent cleanup timed out' ~/.openclaw/logs/gateway.err.log | tail -80
+   grep -E 'active-memory failed|CommandLaneTaskTimeoutError|SessionWriteLockTimeoutError|sendMessage failed|message processing failed|final reply failed|liveness warning|Polling stall|fetch-timeout|GatewayTransportError|closed before connect|agent cleanup timed out' <home>/.openclaw/logs/gateway.err.log | tail -80
    ```
 
 5. **Restart the gateway service when it is wedged.** Prefer the product command once the CLI is responsive:
