@@ -146,6 +146,7 @@ Preferred routing:
      - `Requested changes` after a formal request-changes / needs-changes verdict.
      - `Commented` when feedback was posted without approve/request-changes.
      - Use `Approved (blocked)` only when useful to show approval is done but external merge gates are still blocking.
+   - **Mandatory before final reply:** run the Discord lane lifecycle checklist: (1) are we in the PR-specific normal channel? if not, create/reuse it or explicitly fall back; (2) if we intentionally continue in a legacy thread, does the thread name show `<repo> #<pr> - <Reviewing|Approved|Requested changes|Commented|Approved (blocked)>`? if not, rename it now; (3) if approval is final and the dedicated review thread can be closed/archived, do so after the final summary and authorized GitHub action. Do not skip this just because the review body is already posted to GitHub.
 If the current review lane is a Discord thread whose name does not match the current lifecycle state, rename it promptly only when continuing in that legacy thread is intentional. Prefer first-class Discord/admin tooling if available; otherwise use this skill's helper script when the bot token is available:
      ```bash
      python "$HOME/.hermes/skills/github/pr-review-guardrails/scripts/discord_rename_thread.py" \
@@ -351,6 +352,10 @@ For certification-only PRs whose stated purpose is to add tests/CI and lock curr
 - When a PR introduces or rewires the AI-review/metadata-gate workflows themselves, a normal `@finn-codex` issue comment may run the workflow from the base branch and be skipped or fail to exercise the PR's changed reusable-workflow caller. If the PR branch defines a `workflow_dispatch` path for the review workflow, trigger that branch ref explicitly with `gh workflow run ... --ref <pr-head-branch> -f pr_number=<N> ...` to get current-head AI-review metadata, then re-check `gh pr checks`. Treat any resulting `REQUEST_CHANGES`/failed `finn-ai-coder / review` as a real blocker even if local/manual review looked safe.
 - When local language tooling is unavailable (for example no `php`/Composer/vendor on the host), do not stop at “could not run tests.” Pull failing CI logs with `gh run view <run-id> --log-failed --repo OWNER/REPO` and inspect the exact failing test/linter output. If a new/updated test encodes a prior review requirement (for example a config compatibility contract) and fails because production code violates it, treat that as evidence for the blocker rather than dismissing it as “just a red test.”
 - If below threshold, request/add tests.
+
+### 4a) Queue concurrency / idempotency rollout safety
+
+When a PR is a prerequisite for changing a FIFO/SQS-style serialized queue to a standard/parallel queue, verify that the protected side effect is truly idempotent before approving the prerequisite code. A read-before-write guard such as “skip if Firestore/state already says completed” only protects retries after the completion write; it does **not** protect (a) crashes after the external side effect but before the completion write, or (b) two standard-queue deliveries that both read incomplete state before either writes. Require an idempotency boundary before the external POST (provider idempotency key, check-existing-by-stable-id, or an atomic claim/transaction) and tests for the partial-failure/concurrent duplicate path when the linked ticket/rollout depends on it.
 
 ### 5) Paginated producer/consumer contract safety
 
