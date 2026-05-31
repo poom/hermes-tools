@@ -14,10 +14,11 @@ metadata: github-pr-review-guardrails
 ## Protocol
 
 1. Use this skill only when the user request matches the trigger description or explicitly names `pr-review-guardrails`.
-2. Read the linked references before taking action; they preserve the detailed step-by-step procedures from the previous guide.
-3. Prefer deterministic scripts for repeatable validation and use the documented smoke command before live side effects.
-4. If credentials, network access, or external systems are required, run the offline checks first and then ask for or verify the required access.
-5. Keep new operational detail in `references/` and keep `SKILL.md` focused on routing, protocol, and failure behavior.
+2. At the very beginning of a single-PR review, derive a short stable review-thread title from PR metadata (`<repo>#<number>` or `<owner>/<repo>#<number>`, staying under Discord's 100-character limit). If the request originated in a Discord thread and a thread id plus Discord bot token are available, best-effort rename the thread immediately with `scripts/discord_rename_thread.py`; do not wait until the review is complete. If rename credentials/API access are unavailable, note that the rename was skipped and continue the review.
+3. Read the linked references before taking action; they preserve the detailed step-by-step procedures from the previous guide.
+4. Prefer deterministic scripts for repeatable validation and use the documented smoke command before live side effects.
+5. If credentials, network access, or external systems are required, run the offline checks first and then ask for or verify the required access.
+6. Keep new operational detail in `references/` and keep `SKILL.md` focused on routing, protocol, and failure behavior.
 
 ## References
 
